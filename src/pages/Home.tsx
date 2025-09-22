@@ -29,6 +29,9 @@ export default function Home() {
     dueDate: ''
   })
   const [isGeneratingStatus, setIsGeneratingStatus] = useState(false)
+  const [showStatusPreviewModal, setShowStatusPreviewModal] = useState(false)
+  const [statusSummary, setStatusSummary] = useState('')
+  const [currentProject, setCurrentProject] = useState(null)
 
   // Check if user is already logged in on component mount
   useEffect(() => {
@@ -246,37 +249,10 @@ export default function Home() {
       if (response.ok) {
         const result = await response.json();
         
-        // Save the AI summary directly to the Latest Status field
-        const updateResponse = await fetch(`/api/projects/${project.id}`, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          credentials: 'include',
-          body: JSON.stringify({
-            ...project,
-            latestStatus: result.summary
-          })
-        });
-
-        if (updateResponse.ok) {
-          // Update local project data
-          setProjects(prevProjects => 
-            prevProjects.map(p => 
-              p.id === project.id ? { ...p, latestStatus: result.summary } : p
-            )
-          );
-          
-          // Update viewing project if it's the same one
-          if (viewingProject && viewingProject.id === project.id) {
-            setViewingProject(prev => ({ ...prev, latestStatus: result.summary }));
-          }
-          
-          alert('AI status summary saved to Latest Status field!');
-        } else {
-          const updateError = await updateResponse.json();
-          alert(`Failed to save status: ${updateError.error || 'Unknown error'}`);
-        }
+        // Show the AI summary in a preview modal
+        setStatusSummary(result.summary);
+        setCurrentProject(project);
+        setShowStatusPreviewModal(true);
       } else {
         const error = await response.json();
         alert(`Failed to generate status: ${error.error || 'Unknown error'}`);
@@ -289,6 +265,51 @@ export default function Home() {
     }
   };
 
+  // Save status summary to Latest Status field
+  const saveStatusToLatestStatus = async () => {
+    if (!currentProject || !statusSummary) return;
+    
+    try {
+      const updateResponse = await fetch(`/api/projects/${currentProject.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({
+          ...currentProject,
+          latestStatus: statusSummary
+        })
+      });
+
+      if (updateResponse.ok) {
+        // Update local project data
+        setProjects(prevProjects => 
+          prevProjects.map(p => 
+            p.id === currentProject.id ? { ...p, latestStatus: statusSummary } : p
+          )
+        );
+        
+        // Update viewing project if it's the same one
+        if (viewingProject && viewingProject.id === currentProject.id) {
+          setViewingProject(prev => ({ ...prev, latestStatus: statusSummary }));
+        }
+        
+        // Close modal and reset state
+        setShowStatusPreviewModal(false);
+        setStatusSummary('');
+        setCurrentProject(null);
+        
+        alert('AI status summary saved to Latest Status field!');
+      } else {
+        const updateError = await updateResponse.json();
+        alert(`Failed to save status: ${updateError.error || 'Unknown error'}`);
+      }
+    } catch (error) {
+      console.error('Error saving status:', error);
+      alert('Failed to save status. Please try again.');
+    }
+  };
 
   // Handle adding project update
   const handleAddUpdate = async (e) => {
@@ -2105,6 +2126,113 @@ export default function Home() {
                   })()}
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Status Preview Modal */}
+      {showStatusPreviewModal && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: 'rgba(0, 0, 0, 0.5)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 1001
+        }}
+        onClick={(e) => {
+          if (e.target === e.currentTarget) {
+            setShowStatusPreviewModal(false);
+            setStatusSummary('');
+            setCurrentProject(null);
+          }
+        }}>
+          <div style={{
+            background: 'white',
+            padding: 32,
+            borderRadius: 8,
+            width: '90vw',
+            maxWidth: '800px',
+            maxHeight: '80vh',
+            overflow: 'auto',
+            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)'
+          }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
+              <h3 style={{ margin: 0, fontSize: 18, fontWeight: 500 }}>
+                AI Status Summary - {currentProject?.name}
+              </h3>
+              <button 
+                onClick={() => {
+                  setShowStatusPreviewModal(false);
+                  setStatusSummary('');
+                  setCurrentProject(null);
+                }}
+                style={{ 
+                  background: 'none',
+                  border: 'none',
+                  fontSize: 24,
+                  cursor: 'pointer',
+                  padding: 4,
+                  lineHeight: 1,
+                  color: '#666'
+                }}
+              >
+                ×
+              </button>
+            </div>
+
+            <div style={{
+              background: '#f8f9fa',
+              border: '1px solid #e5e5e5',
+              borderRadius: 8,
+              padding: 20,
+              marginBottom: 24,
+              fontSize: 14,
+              lineHeight: 1.6,
+              whiteSpace: 'pre-wrap'
+            }}>
+              {statusSummary}
+            </div>
+
+            <div style={{ display: 'flex', gap: 12, justifyContent: 'flex-end' }}>
+              <button
+                onClick={() => {
+                  setShowStatusPreviewModal(false);
+                  setStatusSummary('');
+                  setCurrentProject(null);
+                }}
+                style={{
+                  background: '#f8f9fa',
+                  color: '#666',
+                  border: '1px solid #ddd',
+                  borderRadius: 6,
+                  padding: '8px 16px',
+                  fontSize: 13,
+                  cursor: 'pointer'
+                }}
+              >
+                Cancel
+              </button>
+              <button
+                onClick={saveStatusToLatestStatus}
+                style={{
+                  background: '#007bff',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: 6,
+                  padding: '8px 16px',
+                  fontSize: 13,
+                  fontWeight: 500,
+                  cursor: 'pointer'
+                }}
+              >
+                Save to Latest Status
+              </button>
             </div>
           </div>
         </div>
