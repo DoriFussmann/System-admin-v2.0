@@ -28,8 +28,6 @@ export default function Home() {
     project: '',
     dueDate: ''
   })
-  const [showStatusModal, setShowStatusModal] = useState(false)
-  const [statusSummary, setStatusSummary] = useState('')
   const [isGeneratingStatus, setIsGeneratingStatus] = useState(false)
 
   // Check if user is already logged in on component mount
@@ -247,8 +245,38 @@ export default function Home() {
 
       if (response.ok) {
         const result = await response.json();
-        setStatusSummary(result.summary);
-        setShowStatusModal(true);
+        
+        // Save the AI summary directly to the Latest Status field
+        const updateResponse = await fetch(`/api/projects/${project.id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          credentials: 'include',
+          body: JSON.stringify({
+            ...project,
+            latestStatus: result.summary
+          })
+        });
+
+        if (updateResponse.ok) {
+          // Update local project data
+          setProjects(prevProjects => 
+            prevProjects.map(p => 
+              p.id === project.id ? { ...p, latestStatus: result.summary } : p
+            )
+          );
+          
+          // Update viewing project if it's the same one
+          if (viewingProject && viewingProject.id === project.id) {
+            setViewingProject(prev => ({ ...prev, latestStatus: result.summary }));
+          }
+          
+          alert('AI status summary saved to Latest Status field!');
+        } else {
+          const updateError = await updateResponse.json();
+          alert(`Failed to save status: ${updateError.error || 'Unknown error'}`);
+        }
       } else {
         const error = await response.json();
         alert(`Failed to generate status: ${error.error || 'Unknown error'}`);
@@ -261,60 +289,6 @@ export default function Home() {
     }
   };
 
-  // Add status summary to project updates
-  const addStatusToUpdates = async () => {
-    if (!statusSummary || !viewingProject) return;
-    
-    try {
-      const today = new Date().toISOString().split('T')[0];
-      
-      // Create a condensed summary (first 2 sentences or ~150 characters)
-      const sentences = statusSummary.split(/[.!?]+/).filter(s => s.trim().length > 0);
-      const condensedSummary = sentences.length > 2 
-        ? sentences.slice(0, 2).join('. ') + '.'
-        : statusSummary.length > 150 
-          ? statusSummary.substring(0, 147) + '...'
-          : statusSummary;
-      
-      const statusUpdate = `Status Provided by System: ${condensedSummary}`;
-      
-      // Append to existing updates
-      const existingUpdates = viewingProject.updates || '';
-      const newUpdates = existingUpdates 
-        ? `${existingUpdates}\n${today}: ${statusUpdate}`
-        : `${today}: ${statusUpdate}`;
-
-      // Update the project
-      const response = await fetch(`/api/projects/${viewingProject.id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-        body: JSON.stringify({
-          ...viewingProject,
-          updates: newUpdates
-        })
-      });
-
-      if (response.ok) {
-        // Reload projects to reflect the change
-        loadProjects();
-        
-        // Close modals
-        setShowStatusModal(false);
-        setStatusSummary('');
-        
-        alert('Status summary added to project updates!');
-      } else {
-        const error = await response.json();
-        alert(`Failed to add status to updates: ${error.error || 'Unknown error'}`);
-      }
-    } catch (error) {
-      console.error('Error adding status to updates:', error);
-      alert('Failed to add status to updates. Please try again.');
-    }
-  };
 
   // Handle adding project update
   const handleAddUpdate = async (e) => {
@@ -1581,107 +1555,6 @@ export default function Home() {
         </div>
       )}
 
-      {/* Status Update Modal */}
-      {showStatusModal && (
-        <div style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          background: 'rgba(0, 0, 0, 0.5)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          zIndex: 1001
-        }}
-        onClick={(e) => {
-          if (e.target === e.currentTarget) {
-            setShowStatusModal(false);
-            setStatusSummary('');
-          }
-        }}>
-          <div style={{
-            background: 'white',
-            padding: 32,
-            borderRadius: 8,
-            width: '90vw',
-            maxWidth: '800px',
-            maxHeight: '80vh',
-            overflow: 'auto',
-            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)'
-          }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
-              <h3 style={{ margin: 0, fontSize: 18, fontWeight: 500 }}>Status Update</h3>
-              <button 
-                onClick={() => {
-                  setShowStatusModal(false);
-                  setStatusSummary('');
-                }}
-                style={{ 
-                  background: 'none',
-                  border: 'none',
-                  fontSize: 24,
-                  cursor: 'pointer',
-                  padding: 4,
-                  lineHeight: 1,
-                  color: '#666'
-                }}
-              >
-                ×
-              </button>
-            </div>
-
-            <div style={{
-              background: '#f8f9fa',
-              border: '1px solid #e5e5e5',
-              borderRadius: 8,
-              padding: 20,
-              marginBottom: 24,
-              fontSize: 14,
-              lineHeight: 1.6,
-              whiteSpace: 'pre-wrap'
-            }}>
-              {statusSummary}
-            </div>
-
-            <div style={{ display: 'flex', gap: 12, justifyContent: 'flex-end' }}>
-              <button
-                onClick={() => {
-                  setShowStatusModal(false);
-                  setStatusSummary('');
-                }}
-                style={{
-                  background: '#f8f9fa',
-                  color: '#666',
-                  border: '1px solid #ddd',
-                  borderRadius: 6,
-                  padding: '8px 16px',
-                  fontSize: 13,
-                  cursor: 'pointer'
-                }}
-              >
-                Close
-              </button>
-              <button
-                onClick={addStatusToUpdates}
-                style={{
-                  background: '#007bff',
-                  color: 'white',
-                  border: 'none',
-                  borderRadius: 6,
-                  padding: '8px 16px',
-                  fontSize: 13,
-                  fontWeight: 500,
-                  cursor: 'pointer'
-                }}
-              >
-                Add to Updates
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Project Details Modal */}
       {viewingProject && (
