@@ -652,6 +652,13 @@ app.post('/api/generate-status', requireAuth, requireSuperadmin, async (req, res
       return res.status(400).json({ error: 'Project data is required' });
     }
 
+    // Check if OpenAI API key is configured
+    if (!process.env.OPENAI_API_KEY) {
+      return res.json({
+        summary: `Status update for ${projectData.name}:\n\nProject Status: ${projectData.status || 'Active'}\nLast Updated: ${new Date().toLocaleDateString()}\n\nNote: AI status generation is not configured. To enable AI-powered status summaries, add your OpenAI API key to the environment variables.`
+      });
+    }
+
     // Prepare the prompt for OpenAI
     const prompt = `
 Analyze the following project data and provide a comprehensive status summary:
