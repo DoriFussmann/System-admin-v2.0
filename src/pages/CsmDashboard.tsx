@@ -84,6 +84,7 @@ function CsmDashboardPage() {
         const overdueIndex = 7; // Column H (0-based index)
         const cancelledIndex = 8; // Column I (0-based index)
         const daysSinceLastPlanIndex = 9; // Column J (0-based index)
+        const csmFullNameIndex = 24; // Column Y (0-based index)
         
         // Extract month options from L1:W1 (columns 11-22, 0-indexed)
         const months = headers.slice(11, 23).filter(month => month && month.trim());
@@ -109,6 +110,7 @@ function CsmDashboardPage() {
             clinics.push({
               name: row[clinicNameIndex],
               csm: row[csmIndex],
+              csmFullName: row[csmFullNameIndex] || row[csmIndex] || '', // Column Y or fallback to CSM column
               plansSold: plansIndex !== -1 ? parseInt(row[plansIndex]) || 0 : 0,
               averagePlansPerMonth: parseFloat(row[averagePlansIndex]) || 0,
               firstPlanSoldDate: firstPlanDate,
@@ -631,32 +633,42 @@ function CsmDashboardPage() {
                     
                     return (
                       <div style={{ width: '100%' }}>
+                        {/* Account Manager */}
+                        <div style={{ marginBottom: 16 }}>
+                          <div style={{ fontSize: 12, color: '#525252', marginBottom: 4 }}>
+                            Account Manager
+                          </div>
+                          <div style={{ fontSize: 14, color: '#000000' }}>
+                            {selectedClinic.csmFullName}
+                          </div>
+                        </div>
+                        
                         {/* Total Plans Sold */}
-                        <div style={{ marginBottom: 20 }}>
-                          <div style={{ fontSize: 14, color: '#525252', marginBottom: 4 }}>
+                        <div style={{ marginBottom: 16 }}>
+                          <div style={{ fontSize: 12, color: '#525252', marginBottom: 4 }}>
                             Total # of Plans Sold
                           </div>
-                          <div style={{ fontSize: 18, color: '#000000' }}>
+                          <div style={{ fontSize: 14, color: '#000000' }}>
                             {totalPlans.toLocaleString()}
                           </div>
                         </div>
                         
                         {/* First Plan Sold Date */}
-                        <div style={{ marginBottom: 20 }}>
-                          <div style={{ fontSize: 14, color: '#525252', marginBottom: 4 }}>
+                        <div style={{ marginBottom: 16 }}>
+                          <div style={{ fontSize: 12, color: '#525252', marginBottom: 4 }}>
                             First Plan Sold Date
                           </div>
-                          <div style={{ fontSize: 16, color: '#000000', fontWeight: '500' }}>
+                          <div style={{ fontSize: 14, color: '#000000', fontWeight: '500' }}>
                             {formatDate(firstPlanDate)}
                           </div>
                         </div>
                         
                         {/* Days Since Last Plan Sold */}
                         <div>
-                          <div style={{ fontSize: 14, color: '#525252', marginBottom: 4 }}>
+                          <div style={{ fontSize: 12, color: '#525252', marginBottom: 4 }}>
                             Days Since Last Plan Sold
                           </div>
-                          <div style={{ fontSize: 16, color: '#000000', fontWeight: '500' }}>
+                          <div style={{ fontSize: 14, color: '#000000', fontWeight: '500' }}>
                             {daysSinceLastPlan} days
                           </div>
                         </div>
