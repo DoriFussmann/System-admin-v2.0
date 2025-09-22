@@ -1734,71 +1734,71 @@ export default function Home() {
                     </div>
                   </div>
 
-                  {/* Status */}
-                  <div>
-                    <label style={{ display: 'block', marginBottom: 6, fontSize: 13, fontWeight: 500, color: '#333' }}>
-                      Status
-                    </label>
-                    <div style={{
-                      padding: 12,
-                      border: '1px solid #ddd',
-                      borderRadius: 6,
-                      fontSize: 13,
-                      background: '#f8f9fa',
-                      minHeight: '20px'
-                    }}>
-                      {viewingProject.status || '-'}
+                  {/* Status and Source - Side by Side */}
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+                    <div>
+                      <label style={{ display: 'block', marginBottom: 6, fontSize: 13, fontWeight: 500, color: '#333' }}>
+                        Status
+                      </label>
+                      <div style={{
+                        padding: 12,
+                        border: '1px solid #ddd',
+                        borderRadius: 6,
+                        fontSize: 13,
+                        background: '#f8f9fa',
+                        minHeight: '20px'
+                      }}>
+                        {viewingProject.status || '-'}
+                      </div>
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', marginBottom: 6, fontSize: 13, fontWeight: 500, color: '#333' }}>
+                        Source
+                      </label>
+                      <div style={{
+                        padding: 12,
+                        border: '1px solid #ddd',
+                        borderRadius: 6,
+                        fontSize: 13,
+                        background: '#f8f9fa',
+                        minHeight: '20px'
+                      }}>
+                        {viewingProject.source || '-'}
+                      </div>
                     </div>
                   </div>
 
-                  {/* Source */}
-                  <div>
-                    <label style={{ display: 'block', marginBottom: 6, fontSize: 13, fontWeight: 500, color: '#333' }}>
-                      Source
-                    </label>
-                    <div style={{
-                      padding: 12,
-                      border: '1px solid #ddd',
-                      borderRadius: 6,
-                      fontSize: 13,
-                      background: '#f8f9fa',
-                      minHeight: '20px'
-                    }}>
-                      {viewingProject.source || '-'}
+                  {/* Monthly Impact and Type - Side by Side */}
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+                    <div>
+                      <label style={{ display: 'block', marginBottom: 6, fontSize: 13, fontWeight: 500, color: '#333' }}>
+                        Monthly Impact
+                      </label>
+                      <div style={{
+                        padding: 12,
+                        border: '1px solid #ddd',
+                        borderRadius: 6,
+                        fontSize: 13,
+                        background: '#f8f9fa',
+                        minHeight: '20px'
+                      }}>
+                        {viewingProject.monthlyImpact || '-'}
+                      </div>
                     </div>
-                  </div>
-
-                  {/* Monthly Impact */}
-                  <div>
-                    <label style={{ display: 'block', marginBottom: 6, fontSize: 13, fontWeight: 500, color: '#333' }}>
-                      Monthly Impact
-                    </label>
-                    <div style={{
-                      padding: 12,
-                      border: '1px solid #ddd',
-                      borderRadius: 6,
-                      fontSize: 13,
-                      background: '#f8f9fa',
-                      minHeight: '20px'
-                    }}>
-                      {viewingProject.monthlyImpact || '-'}
-                    </div>
-                  </div>
-
-                  {/* Type */}
-                  <div>
-                    <label style={{ display: 'block', marginBottom: 6, fontSize: 13, fontWeight: 500, color: '#333' }}>
-                      Type
-                    </label>
-                    <div style={{
-                      padding: 12,
-                      border: '1px solid #ddd',
-                      borderRadius: 6,
-                      fontSize: 13,
-                      background: '#f8f9fa',
-                      minHeight: '20px'
-                    }}>
-                      {viewingProject.type || '-'}
+                    <div>
+                      <label style={{ display: 'block', marginBottom: 6, fontSize: 13, fontWeight: 500, color: '#333' }}>
+                        Type
+                      </label>
+                      <div style={{
+                        padding: 12,
+                        border: '1px solid #ddd',
+                        borderRadius: 6,
+                        fontSize: 13,
+                        background: '#f8f9fa',
+                        minHeight: '20px'
+                      }}>
+                        {viewingProject.type || '-'}
+                      </div>
                     </div>
                   </div>
 
@@ -1816,6 +1816,63 @@ export default function Home() {
                       minHeight: '20px'
                     }}>
                       {viewingProject.hoursPerMonth || '-'}
+                    </div>
+                  </div>
+
+                  {/* Updates - Collapsible */}
+                  <div>
+                    <label 
+                      style={{ 
+                        display: 'flex', 
+                        alignItems: 'center',
+                        marginBottom: 6, 
+                        fontSize: 13, 
+                        fontWeight: 500, 
+                        color: '#333',
+                        cursor: 'pointer'
+                      }}
+                      onClick={() => toggleFieldExpansion('updates')}
+                    >
+                      Updates
+                      <span style={{ 
+                        marginLeft: 8, 
+                        fontSize: 12, 
+                        color: '#666',
+                        transform: expandedFields.updates ? 'rotate(90deg)' : 'rotate(0deg)',
+                        transition: 'transform 0.2s ease'
+                      }}>
+                        ▶
+                      </span>
+                    </label>
+                    <div style={{
+                      padding: expandedFields.updates ? 12 : 8,
+                      border: '1px solid #ddd',
+                      borderRadius: 6,
+                      fontSize: 13,
+                      background: '#f8f9fa',
+                      minHeight: expandedFields.updates ? '100px' : '20px',
+                      maxHeight: expandedFields.updates ? '200px' : '20px',
+                      overflow: expandedFields.updates ? 'auto' : 'hidden',
+                      whiteSpace: expandedFields.updates ? 'pre-wrap' : 'nowrap',
+                      transition: 'all 0.3s ease',
+                      cursor: 'pointer'
+                    }}
+                    onClick={() => toggleFieldExpansion('updates')}
+                    >
+                      {expandedFields.updates ? (
+                        viewingProject.updates || 'No updates available'
+                      ) : (
+                        <div style={{ 
+                          display: 'flex', 
+                          alignItems: 'center', 
+                          justifyContent: 'center',
+                          height: '100%',
+                          color: '#666',
+                          fontSize: 12
+                        }}>
+                          Click to view updates
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
