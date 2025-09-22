@@ -1687,180 +1687,206 @@ export default function Home() {
               </div>
             </div>
 
-            {/* 3-Column Layout */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 24, height: '100%' }}>
+            {/* 2-Row Layout */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 24, height: '100%' }}>
               
-              {/* LEFT COLUMN - Basic Project Info */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-                <h3 style={{ margin: 0, fontSize: 16, fontWeight: 500, color: '#333', borderBottom: '2px solid #007bff', paddingBottom: 8 }}>
-                  Project Details
-                </h3>
+              {/* TOP ROW - Project Details (1/3) + Latest Status (2/3) */}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: 24, flex: '1' }}>
                 
-                {/* Name */}
-                <div>
-                  <label style={{ display: 'block', marginBottom: 6, fontSize: 13, fontWeight: 500, color: '#333' }}>
-                    Name
-                  </label>
-                  <div style={{
-                    padding: 12,
-                    border: '1px solid #ddd',
-                    borderRadius: 6,
-                    fontSize: 13,
-                    background: '#f8f9fa',
-                    minHeight: '20px'
-                  }}>
-                    {viewingProject.name || '-'}
+                {/* LEFT - Project Details */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+                  <h3 style={{ margin: 0, fontSize: 16, fontWeight: 500, color: '#333', borderBottom: '2px solid #007bff', paddingBottom: 8 }}>
+                    Project Details
+                  </h3>
+                  
+                  {/* Name */}
+                  <div>
+                    <label style={{ display: 'block', marginBottom: 6, fontSize: 13, fontWeight: 500, color: '#333' }}>
+                      Name
+                    </label>
+                    <div style={{
+                      padding: 12,
+                      border: '1px solid #ddd',
+                      borderRadius: 6,
+                      fontSize: 13,
+                      background: '#f8f9fa',
+                      minHeight: '20px'
+                    }}>
+                      {viewingProject.name || '-'}
+                    </div>
+                  </div>
+
+                  {/* Description */}
+                  <div>
+                    <label style={{ display: 'block', marginBottom: 6, fontSize: 13, fontWeight: 500, color: '#333' }}>
+                      Description
+                    </label>
+                    <div style={{
+                      padding: 12,
+                      border: '1px solid #ddd',
+                      borderRadius: 6,
+                      fontSize: 13,
+                      background: '#f8f9fa',
+                      minHeight: '60px',
+                      whiteSpace: 'pre-wrap'
+                    }}>
+                      {viewingProject.description || '-'}
+                    </div>
+                  </div>
+
+                  {/* Status */}
+                  <div>
+                    <label style={{ display: 'block', marginBottom: 6, fontSize: 13, fontWeight: 500, color: '#333' }}>
+                      Status
+                    </label>
+                    <div style={{
+                      padding: 12,
+                      border: '1px solid #ddd',
+                      borderRadius: 6,
+                      fontSize: 13,
+                      background: '#f8f9fa',
+                      minHeight: '20px'
+                    }}>
+                      {viewingProject.status || '-'}
+                    </div>
+                  </div>
+
+                  {/* Source */}
+                  <div>
+                    <label style={{ display: 'block', marginBottom: 6, fontSize: 13, fontWeight: 500, color: '#333' }}>
+                      Source
+                    </label>
+                    <div style={{
+                      padding: 12,
+                      border: '1px solid #ddd',
+                      borderRadius: 6,
+                      fontSize: 13,
+                      background: '#f8f9fa',
+                      minHeight: '20px'
+                    }}>
+                      {viewingProject.source || '-'}
+                    </div>
+                  </div>
+
+                  {/* Monthly Impact */}
+                  <div>
+                    <label style={{ display: 'block', marginBottom: 6, fontSize: 13, fontWeight: 500, color: '#333' }}>
+                      Monthly Impact
+                    </label>
+                    <div style={{
+                      padding: 12,
+                      border: '1px solid #ddd',
+                      borderRadius: 6,
+                      fontSize: 13,
+                      background: '#f8f9fa',
+                      minHeight: '20px'
+                    }}>
+                      {viewingProject.monthlyImpact || '-'}
+                    </div>
+                  </div>
+
+                  {/* Type */}
+                  <div>
+                    <label style={{ display: 'block', marginBottom: 6, fontSize: 13, fontWeight: 500, color: '#333' }}>
+                      Type
+                    </label>
+                    <div style={{
+                      padding: 12,
+                      border: '1px solid #ddd',
+                      borderRadius: 6,
+                      fontSize: 13,
+                      background: '#f8f9fa',
+                      minHeight: '20px'
+                    }}>
+                      {viewingProject.type || '-'}
+                    </div>
+                  </div>
+
+                  {/* Hours Per Month */}
+                  <div>
+                    <label style={{ display: 'block', marginBottom: 6, fontSize: 13, fontWeight: 500, color: '#333' }}>
+                      Hours Per Month
+                    </label>
+                    <div style={{
+                      padding: 12,
+                      border: '1px solid #ddd',
+                      borderRadius: 6,
+                      fontSize: 13,
+                      background: '#f8f9fa',
+                      minHeight: '20px'
+                    }}>
+                      {viewingProject.hoursPerMonth || '-'}
+                    </div>
                   </div>
                 </div>
 
-                {/* Description */}
-                <div>
-                  <label style={{ display: 'block', marginBottom: 6, fontSize: 13, fontWeight: 500, color: '#333' }}>
-                    Description
-                  </label>
+                {/* RIGHT - Latest Status (2/3 width) */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+                  <h3 style={{ margin: 0, fontSize: 16, fontWeight: 500, color: '#333', borderBottom: '2px solid #28a745', paddingBottom: 8 }}>
+                    Latest Status
+                  </h3>
+                  
                   <div style={{
-                    padding: 12,
+                    padding: 16,
                     border: '1px solid #ddd',
-                    borderRadius: 6,
+                    borderRadius: 8,
                     fontSize: 13,
                     background: '#f8f9fa',
-                    minHeight: '60px',
-                    whiteSpace: 'pre-wrap'
+                    minHeight: '300px',
+                    whiteSpace: 'pre-wrap',
+                    lineHeight: 1.5,
+                    flex: 1,
+                    overflow: 'auto'
                   }}>
-                    {viewingProject.description || '-'}
-                  </div>
-                </div>
-
-                {/* Status */}
-                <div>
-                  <label style={{ display: 'block', marginBottom: 6, fontSize: 13, fontWeight: 500, color: '#333' }}>
-                    Status
-                  </label>
-                  <div style={{
-                    padding: 12,
-                    border: '1px solid #ddd',
-                    borderRadius: 6,
-                    fontSize: 13,
-                    background: '#f8f9fa',
-                    minHeight: '20px'
-                  }}>
-                    {viewingProject.status || '-'}
-                  </div>
-                </div>
-
-                {/* Source */}
-                <div>
-                  <label style={{ display: 'block', marginBottom: 6, fontSize: 13, fontWeight: 500, color: '#333' }}>
-                    Source
-                  </label>
-                  <div style={{
-                    padding: 12,
-                    border: '1px solid #ddd',
-                    borderRadius: 6,
-                    fontSize: 13,
-                    background: '#f8f9fa',
-                    minHeight: '20px'
-                  }}>
-                    {viewingProject.source || '-'}
-                  </div>
-                </div>
-
-                {/* Monthly Impact */}
-                <div>
-                  <label style={{ display: 'block', marginBottom: 6, fontSize: 13, fontWeight: 500, color: '#333' }}>
-                    Monthly Impact
-                  </label>
-                  <div style={{
-                    padding: 12,
-                    border: '1px solid #ddd',
-                    borderRadius: 6,
-                    fontSize: 13,
-                    background: '#f8f9fa',
-                    minHeight: '20px'
-                  }}>
-                    {viewingProject.monthlyImpact || '-'}
-                  </div>
-                </div>
-
-                {/* Type */}
-                <div>
-                  <label style={{ display: 'block', marginBottom: 6, fontSize: 13, fontWeight: 500, color: '#333' }}>
-                    Type
-                  </label>
-                  <div style={{
-                    padding: 12,
-                    border: '1px solid #ddd',
-                    borderRadius: 6,
-                    fontSize: 13,
-                    background: '#f8f9fa',
-                    minHeight: '20px'
-                  }}>
-                    {viewingProject.type || '-'}
-                  </div>
-                </div>
-
-                {/* Hours Per Month */}
-                <div>
-                  <label style={{ display: 'block', marginBottom: 6, fontSize: 13, fontWeight: 500, color: '#333' }}>
-                    Hours Per Month
-                  </label>
-                  <div style={{
-                    padding: 12,
-                    border: '1px solid #ddd',
-                    borderRadius: 6,
-                    fontSize: 13,
-                    background: '#f8f9fa',
-                    minHeight: '20px'
-                  }}>
-                    {viewingProject.hoursPerMonth || '-'}
+                    {viewingProject.latestStatus || 'No status available'}
                   </div>
                 </div>
               </div>
 
-              {/* MIDDLE COLUMN - Latest Status */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-                <h3 style={{ margin: 0, fontSize: 16, fontWeight: 500, color: '#333', borderBottom: '2px solid #28a745', paddingBottom: 8 }}>
-                  Latest Status
-                </h3>
-                
-                <div style={{
-                  padding: 16,
-                  border: '1px solid #ddd',
-                  borderRadius: 8,
-                  fontSize: 13,
-                  background: '#f8f9fa',
-                  minHeight: '200px',
-                  whiteSpace: 'pre-wrap',
-                  lineHeight: 1.5,
-                  flex: 1
-                }}>
-                  {viewingProject.latestStatus || 'No status available'}
-                </div>
-              </div>
-
-              {/* RIGHT COLUMN - Tasks */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-                <h3 style={{ margin: 0, fontSize: 16, fontWeight: 500, color: '#333', borderBottom: '2px solid #dc3545', paddingBottom: 8 }}>
-                  Tasks
-                </h3>
+              {/* BOTTOM ROW - Tasks in 3 equal columns */}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 24 }}>
                 
                 {/* Do Tasks */}
                 <div>
-                  <label style={{ display: 'block', marginBottom: 6, fontSize: 13, fontWeight: 500, color: '#dc3545' }}>
-                    Do ({(() => {
-                      const doTasks = tasks.filter(task => task.status === 'Do' && task.project === viewingProject.id);
-                      return doTasks.length;
-                    })()})
-                  </label>
+                  <h4 style={{ 
+                    margin: '0 0 16px 0', 
+                    fontSize: 16, 
+                    fontWeight: 500, 
+                    color: '#dc3545', 
+                    borderBottom: '2px solid #dc3545', 
+                    paddingBottom: 8,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between'
+                  }}>
+                    Do
+                    <span style={{ 
+                      fontSize: 14, 
+                      background: '#dc3545', 
+                      color: 'white', 
+                      borderRadius: '50%', 
+                      width: 24, 
+                      height: 24, 
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      justifyContent: 'center' 
+                    }}>
+                      {(() => {
+                        const doTasks = tasks.filter(task => task.status === 'Do' && task.project === viewingProject.id);
+                        return doTasks.length;
+                      })()}
+                    </span>
+                  </h4>
                   <div style={{
-                    padding: 12,
+                    padding: 16,
                     border: '1px solid #ddd',
-                    borderRadius: 6,
-                    fontSize: 12,
+                    borderRadius: 8,
+                    fontSize: 13,
                     background: '#fff5f5',
-                    minHeight: '60px',
-                    maxHeight: '120px',
-                    overflow: 'auto'
+                    minHeight: '150px',
+                    maxHeight: '200px',
+                    overflow: 'auto',
+                    whiteSpace: 'pre-wrap'
                   }}>
                     {(() => {
                       const doTasks = tasks.filter(task => task.status === 'Do' && task.project === viewingProject.id);
@@ -1871,21 +1897,45 @@ export default function Home() {
 
                 {/* Doing Tasks */}
                 <div>
-                  <label style={{ display: 'block', marginBottom: 6, fontSize: 13, fontWeight: 500, color: '#ffc107' }}>
-                    Doing ({(() => {
-                      const doingTasks = tasks.filter(task => task.status === 'Doing' && task.project === viewingProject.id);
-                      return doingTasks.length;
-                    })()})
-                  </label>
+                  <h4 style={{ 
+                    margin: '0 0 16px 0', 
+                    fontSize: 16, 
+                    fontWeight: 500, 
+                    color: '#ffc107', 
+                    borderBottom: '2px solid #ffc107', 
+                    paddingBottom: 8,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between'
+                  }}>
+                    Doing
+                    <span style={{ 
+                      fontSize: 14, 
+                      background: '#ffc107', 
+                      color: 'white', 
+                      borderRadius: '50%', 
+                      width: 24, 
+                      height: 24, 
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      justifyContent: 'center' 
+                    }}>
+                      {(() => {
+                        const doingTasks = tasks.filter(task => task.status === 'Doing' && task.project === viewingProject.id);
+                        return doingTasks.length;
+                      })()}
+                    </span>
+                  </h4>
                   <div style={{
-                    padding: 12,
+                    padding: 16,
                     border: '1px solid #ddd',
-                    borderRadius: 6,
-                    fontSize: 12,
+                    borderRadius: 8,
+                    fontSize: 13,
                     background: '#fffbf0',
-                    minHeight: '60px',
-                    maxHeight: '120px',
-                    overflow: 'auto'
+                    minHeight: '150px',
+                    maxHeight: '200px',
+                    overflow: 'auto',
+                    whiteSpace: 'pre-wrap'
                   }}>
                     {(() => {
                       const doingTasks = tasks.filter(task => task.status === 'Doing' && task.project === viewingProject.id);
@@ -1896,21 +1946,45 @@ export default function Home() {
 
                 {/* Done Tasks */}
                 <div>
-                  <label style={{ display: 'block', marginBottom: 6, fontSize: 13, fontWeight: 500, color: '#28a745' }}>
-                    Done ({(() => {
-                      const doneTasks = tasks.filter(task => task.status === 'Done' && task.project === viewingProject.id);
-                      return doneTasks.length;
-                    })()})
-                  </label>
+                  <h4 style={{ 
+                    margin: '0 0 16px 0', 
+                    fontSize: 16, 
+                    fontWeight: 500, 
+                    color: '#28a745', 
+                    borderBottom: '2px solid #28a745', 
+                    paddingBottom: 8,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between'
+                  }}>
+                    Done
+                    <span style={{ 
+                      fontSize: 14, 
+                      background: '#28a745', 
+                      color: 'white', 
+                      borderRadius: '50%', 
+                      width: 24, 
+                      height: 24, 
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      justifyContent: 'center' 
+                    }}>
+                      {(() => {
+                        const doneTasks = tasks.filter(task => task.status === 'Done' && task.project === viewingProject.id);
+                        return doneTasks.length;
+                      })()}
+                    </span>
+                  </h4>
                   <div style={{
-                    padding: 12,
+                    padding: 16,
                     border: '1px solid #ddd',
-                    borderRadius: 6,
-                    fontSize: 12,
+                    borderRadius: 8,
+                    fontSize: 13,
                     background: '#f0fff4',
-                    minHeight: '60px',
-                    maxHeight: '120px',
-                    overflow: 'auto'
+                    minHeight: '150px',
+                    maxHeight: '200px',
+                    overflow: 'auto',
+                    whiteSpace: 'pre-wrap'
                   }}>
                     {(() => {
                       const doneTasks = tasks.filter(task => task.status === 'Done' && task.project === viewingProject.id);
