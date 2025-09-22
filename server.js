@@ -282,6 +282,7 @@ app.get('/api/projects', async (req, res) => {
         id: project.id,
         name: project.title,
         status: project.status,
+        latestStatus: project.latestStatus,
         createdAt: project.createdAt,
         updatedAt: project.updatedAt,
         ...notes // Spread the notes object to maintain backward compatibility
@@ -297,13 +298,14 @@ app.get('/api/projects', async (req, res) => {
 
 app.post('/api/projects', requireAdminWrites, async (req, res) => {
   try {
-    // Extract title and status from request body
-    const { name, status, ...otherFields } = req.body;
+    // Extract title, status, and latestStatus from request body
+    const { name, status, latestStatus, ...otherFields } = req.body;
     
     const newProject = await prisma.project.create({
       data: {
         title: name || 'Untitled Project',
         status: status || null,
+        latestStatus: latestStatus || null,
         notes: JSON.stringify(otherFields) // Store other fields in notes
       }
     });
@@ -314,6 +316,7 @@ app.post('/api/projects', requireAdminWrites, async (req, res) => {
       id: newProject.id,
       name: newProject.title,
       status: newProject.status,
+      latestStatus: newProject.latestStatus,
       createdAt: newProject.createdAt,
       updatedAt: newProject.updatedAt,
       ...notes
@@ -328,14 +331,15 @@ app.post('/api/projects', requireAdminWrites, async (req, res) => {
 
 app.put('/api/projects/:id', requireAdminWrites, async (req, res) => {
   try {
-    // Extract title and status from request body
-    const { name, status, ...otherFields } = req.body;
+    // Extract title, status, and latestStatus from request body
+    const { name, status, latestStatus, ...otherFields } = req.body;
     
     const updatedProject = await prisma.project.update({
       where: { id: req.params.id },
       data: {
         title: name || undefined,
         status: status || undefined,
+        latestStatus: latestStatus || undefined,
         notes: Object.keys(otherFields).length > 0 ? JSON.stringify(otherFields) : undefined
       }
     });
@@ -346,6 +350,7 @@ app.put('/api/projects/:id', requireAdminWrites, async (req, res) => {
       id: updatedProject.id,
       name: updatedProject.title,
       status: updatedProject.status,
+      latestStatus: updatedProject.latestStatus,
       createdAt: updatedProject.createdAt,
       updatedAt: updatedProject.updatedAt,
       ...notes
