@@ -635,11 +635,8 @@ function CsmDashboardPage() {
                       <div style={{ width: '100%' }}>
                         {/* Account Manager */}
                         <div style={{ marginBottom: 16 }}>
-                          <div style={{ fontSize: 12, color: '#525252', marginBottom: 4 }}>
-                            Account Manager
-                          </div>
-                          <div style={{ fontSize: 14, color: '#000000' }}>
-                            {selectedClinic.csmFullName}
+                          <div style={{ fontSize: 12, color: '#525252' }}>
+                            Account Manager: {selectedClinic.csmFullName}
                           </div>
                         </div>
                         
