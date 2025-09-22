@@ -292,11 +292,7 @@ function CsmDashboardPage() {
                       objectFit: 'contain'
                     }} 
                   />
-                ) : (
-                  <span style={{ fontSize: 16, lineHeight: '24px', fontWeight: 400, color: '#171717' }}>
-                    The Night Ventures
-                  </span>
-                )}
+                ) : null}
               </a>
             </div>
           </nav>
