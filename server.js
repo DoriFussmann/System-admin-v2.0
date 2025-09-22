@@ -680,7 +680,7 @@ Please provide a concise status summary that includes:
 4. Any potential issues or blockers
 5. Overall progress assessment
 
-Keep the response professional and actionable, around 200-300 words.
+Keep the response professional and actionable, around 100-200 words.
 `;
 
     // Make OpenAI API call
@@ -702,7 +702,7 @@ Keep the response professional and actionable, around 200-300 words.
             content: prompt
           }
         ],
-        max_tokens: 500,
+        max_tokens: 300,
         temperature: 0.7
       })
     });
