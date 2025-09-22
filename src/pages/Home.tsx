@@ -604,7 +604,7 @@ export default function Home() {
                       className="btn btn-sm" 
                       onClick={() => setShowLoginModal(true)}
                     >
-                      Login
+                      Log In
                     </button>
                   )}
                 </div>
