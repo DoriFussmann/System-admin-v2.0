@@ -866,90 +866,7 @@ app.get('/api/auth/me', verifyToken, async (req, res) => {
   }
 });
 
-// Generic collection endpoints
-app.get('/api/:collection', async (req, res) => {
-  try {
-    console.log(`[DEBUG] Fetching collection: ${req.params.collection}`);
-    console.log(`[DEBUG] Content dir: ${CONTENT_DIR}`);
-    console.log(`[DEBUG] __dirname: ${__dirname}`);
-    
-    const data = await readCollection(req.params.collection);
-    console.log(`[DEBUG] Found ${data.length} items in ${req.params.collection}`);
-    res.json(data);
-  } catch (e) {
-    console.error(`[ERROR] Failed to read collection ${req.params.collection}:`, e);
-    res.status(500).json({ error: e.message });
-  }
-});
-
-app.post('/api/:collection', requireAdminWrites, async (req, res) => {
-  try {
-    const data = await readCollection(req.params.collection);
-    const newItem = {
-      id: nodeRandomUUID(),
-      ...req.body,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString()
-    };
-    data.push(newItem);
-    await writeCollection(req.params.collection, data);
-    res.json(newItem);
-  } catch (e) {
-    res.status(500).json({ error: e.message });
-  }
-});
-
-app.get('/api/:collection/:id', async (req, res) => {
-  try {
-    const data = await readCollection(req.params.collection);
-    const item = data.find(item => item.id === req.params.id);
-    if (!item) {
-      return res.status(404).json({ error: 'Item not found' });
-    }
-    res.json(item);
-  } catch (e) {
-    res.status(500).json({ error: e.message });
-  }
-});
-
-app.put('/api/:collection/:id', requireAdminWrites, async (req, res) => {
-  try {
-    const data = await readCollection(req.params.collection);
-    const index = data.findIndex(item => item.id === req.params.id);
-    if (index === -1) {
-      return res.status(404).json({ error: 'Item not found' });
-    }
-    
-    data[index] = {
-      ...data[index],
-      ...req.body,
-      updatedAt: new Date().toISOString()
-    };
-    
-    await writeCollection(req.params.collection, data);
-    res.json(data[index]);
-  } catch (e) {
-    res.status(500).json({ error: e.message });
-  }
-});
-
-app.delete('/api/:collection/:id', requireAdminWrites, async (req, res) => {
-  try {
-    const data = await readCollection(req.params.collection);
-    const index = data.findIndex(item => item.id === req.params.id);
-    if (index === -1) {
-      return res.status(404).json({ error: 'Item not found' });
-    }
-    
-    data.splice(index, 1);
-    await writeCollection(req.params.collection, data);
-    res.json({ ok: true, id: req.params.id });
-  } catch (e) {
-    res.status(500).json({ error: e.message });
-  }
-});
-
-// Users management endpoints
+// Users management endpoints (must come before generic collection routes)
 app.get('/api/users', requireAuth, async (req, res) => {
   try {
     const users = await prisma.user.findMany({
@@ -1095,6 +1012,89 @@ app.delete('/api/users/:id', requireAuth, requireSuperadmin, requireAdminWrites,
       // Prisma error code for record not found
       return res.status(404).json({ error: 'User not found' });
     }
+    res.status(500).json({ error: e.message });
+  }
+});
+
+// Generic collection endpoints
+app.get('/api/:collection', async (req, res) => {
+  try {
+    console.log(`[DEBUG] Fetching collection: ${req.params.collection}`);
+    console.log(`[DEBUG] Content dir: ${CONTENT_DIR}`);
+    console.log(`[DEBUG] __dirname: ${__dirname}`);
+    
+    const data = await readCollection(req.params.collection);
+    console.log(`[DEBUG] Found ${data.length} items in ${req.params.collection}`);
+    res.json(data);
+  } catch (e) {
+    console.error(`[ERROR] Failed to read collection ${req.params.collection}:`, e);
+    res.status(500).json({ error: e.message });
+  }
+});
+
+app.post('/api/:collection', requireAdminWrites, async (req, res) => {
+  try {
+    const data = await readCollection(req.params.collection);
+    const newItem = {
+      id: nodeRandomUUID(),
+      ...req.body,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
+    };
+    data.push(newItem);
+    await writeCollection(req.params.collection, data);
+    res.json(newItem);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+app.get('/api/:collection/:id', async (req, res) => {
+  try {
+    const data = await readCollection(req.params.collection);
+    const item = data.find(item => item.id === req.params.id);
+    if (!item) {
+      return res.status(404).json({ error: 'Item not found' });
+    }
+    res.json(item);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+app.put('/api/:collection/:id', requireAdminWrites, async (req, res) => {
+  try {
+    const data = await readCollection(req.params.collection);
+    const index = data.findIndex(item => item.id === req.params.id);
+    if (index === -1) {
+      return res.status(404).json({ error: 'Item not found' });
+    }
+    
+    data[index] = {
+      ...data[index],
+      ...req.body,
+      updatedAt: new Date().toISOString()
+    };
+    
+    await writeCollection(req.params.collection, data);
+    res.json(data[index]);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+app.delete('/api/:collection/:id', requireAdminWrites, async (req, res) => {
+  try {
+    const data = await readCollection(req.params.collection);
+    const index = data.findIndex(item => item.id === req.params.id);
+    if (index === -1) {
+      return res.status(404).json({ error: 'Item not found' });
+    }
+    
+    data.splice(index, 1);
+    await writeCollection(req.params.collection, data);
+    res.json({ ok: true, id: req.params.id });
+  } catch (e) {
     res.status(500).json({ error: e.message });
   }
 });
