@@ -82,8 +82,8 @@ const upload = multer({
 // Middleware
 app.use(cors());
 app.use(cookieParser());
-app.use(express.json({ limit: '50mb' }));
-app.use(express.urlencoded({ limit: '50mb', extended: true }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
 // Admin write protection middleware
@@ -284,6 +284,7 @@ app.get('/api/projects', async (req, res) => {
         name: project.title,
         status: project.status,
         latestStatus: project.latestStatus,
+        logoUrl: project.logoUrl,
         createdAt: project.createdAt,
         updatedAt: project.updatedAt,
         ...notes // Spread the notes object to maintain backward compatibility
@@ -299,14 +300,15 @@ app.get('/api/projects', async (req, res) => {
 
 app.post('/api/projects', requireAdminWrites, async (req, res) => {
   try {
-    // Extract title, status, and latestStatus from request body
-    const { name, status, latestStatus, ...otherFields } = req.body;
+    // Extract title, status, latestStatus, and logoUrl from request body
+    const { name, status, latestStatus, logoUrl, ...otherFields } = req.body;
     
     const newProject = await prisma.project.create({
       data: {
         title: name || 'Untitled Project',
         status: status || null,
         latestStatus: latestStatus || null,
+        logoUrl: logoUrl || null,
         notes: JSON.stringify(otherFields) // Store other fields in notes
       }
     });
@@ -318,6 +320,7 @@ app.post('/api/projects', requireAdminWrites, async (req, res) => {
       name: newProject.title,
       status: newProject.status,
       latestStatus: newProject.latestStatus,
+      logoUrl: newProject.logoUrl,
       createdAt: newProject.createdAt,
       updatedAt: newProject.updatedAt,
       ...notes
@@ -332,8 +335,8 @@ app.post('/api/projects', requireAdminWrites, async (req, res) => {
 
 app.put('/api/projects/:id', requireAdminWrites, async (req, res) => {
   try {
-    // Extract title, status, and latestStatus from request body
-    const { name, status, latestStatus, ...otherFields } = req.body;
+    // Extract title, status, latestStatus, and logoUrl from request body
+    const { name, status, latestStatus, logoUrl, ...otherFields } = req.body;
     
     const updatedProject = await prisma.project.update({
       where: { id: req.params.id },
@@ -341,6 +344,7 @@ app.put('/api/projects/:id', requireAdminWrites, async (req, res) => {
         title: name || undefined,
         status: status || undefined,
         latestStatus: latestStatus || undefined,
+        logoUrl: logoUrl || undefined,
         notes: Object.keys(otherFields).length > 0 ? JSON.stringify(otherFields) : undefined
       }
     });
@@ -352,6 +356,7 @@ app.put('/api/projects/:id', requireAdminWrites, async (req, res) => {
       name: updatedProject.title,
       status: updatedProject.status,
       latestStatus: updatedProject.latestStatus,
+      logoUrl: updatedProject.logoUrl,
       createdAt: updatedProject.createdAt,
       updatedAt: updatedProject.updatedAt,
       ...notes

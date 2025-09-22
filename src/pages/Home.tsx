@@ -678,9 +678,9 @@ export default function Home() {
                             justifyContent: 'center',
                             minHeight: 0
                           }}>
-                          {project.imageDataUrl ? (
+                          {project.logoUrl ? (
                             <img
-                              src={project.imageDataUrl}
+                              src={project.logoUrl}
                               alt={`${project.name} logo`}
                               style={{
                                 maxWidth: '80%',
@@ -1621,7 +1621,7 @@ export default function Home() {
               </div>
               <div style={{ display: 'flex', alignItems: 'flex-start', gap: 16 }}>
                 {/* Logo Display - Top Right */}
-                {viewingProject.imageDataUrl && (
+                {viewingProject.logoUrl && (
                   <div style={{ 
                     width: 80,
                     height: 80,
@@ -1633,7 +1633,7 @@ export default function Home() {
                     background: '#f8f9fa'
                   }}>
                     <img 
-                      src={viewingProject.imageDataUrl} 
+                      src={viewingProject.logoUrl} 
                       alt="Project logo" 
                       style={{ 
                         width: '100%',

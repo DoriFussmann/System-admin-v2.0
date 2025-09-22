@@ -420,14 +420,14 @@ function AdminPage() {
       const monthlyImpact = formData.get('monthlyImpact')
       const hoursPerMonth = formData.get('hoursPerMonth')
       const updates = formData.get('updates')
-      let imageDataUrl = editingProject.imageDataUrl // Default to existing image
+      let logoUrl = editingProject.logoUrl // Default to existing logo URL
       let logoName = editingProject.logo // Default to existing logo name
 
       // Process new logo file if uploaded
       if (editingProject._tempFile) {
         // Upload file to server
         const uploadResult = await uploadFile(editingProject._tempFile);
-        imageDataUrl = uploadResult.url; // This will be something like "/uploads/filename.jpg"
+        logoUrl = uploadResult.url; // This will be something like "/uploads/filename.jpg"
         logoName = uploadResult.originalName;
       }
       
@@ -443,7 +443,7 @@ function AdminPage() {
         hoursPerMonth: hoursPerMonth ? parseFloat(hoursPerMonth) : 0,
         updates: updates || '',
         logo: logoName,
-        imageDataUrl: imageDataUrl
+        logoUrl: logoUrl
       }
 
       // Save to server
@@ -1493,12 +1493,12 @@ function AdminPage() {
                         alignItems: 'center',
                         justifyContent: 'center',
                         cursor: 'pointer',
-                        background: editingProject.imageDataUrl ? 'transparent' : '#f8f9fa',
+                        background: editingProject.logoUrl ? 'transparent' : '#f8f9fa',
                         transition: 'all 0.2s ease'
                       }}
                       onClick={() => document.getElementById('logo-upload-input').click()}
                       onMouseEnter={(e) => {
-                        if (editingProject.imageDataUrl) {
+                        if (editingProject.logoUrl) {
                           e.target.style.opacity = '0.8';
                           const overlay = e.target.querySelector('.logo-overlay');
                           if (overlay) overlay.style.opacity = '1';
@@ -1508,7 +1508,7 @@ function AdminPage() {
                         }
                       }}
                       onMouseLeave={(e) => {
-                        if (editingProject.imageDataUrl) {
+                        if (editingProject.logoUrl) {
                           e.target.style.opacity = '1';
                           const overlay = e.target.querySelector('.logo-overlay');
                           if (overlay) overlay.style.opacity = '0';
@@ -1518,10 +1518,10 @@ function AdminPage() {
                         }
                       }}
                     >
-                      {editingProject.imageDataUrl ? (
+                      {editingProject.logoUrl ? (
                         <>
                           <img 
-                            src={editingProject.imageDataUrl} 
+                            src={editingProject.logoUrl} 
                             alt="Project logo" 
                             style={{ 
                               width: '100%',
@@ -1579,7 +1579,7 @@ function AdminPage() {
                             const previewUrl = URL.createObjectURL(file);
                             setEditingProject(prev => ({
                               ...prev,
-                              imageDataUrl: previewUrl,
+                              logoUrl: previewUrl,
                               _tempFile: file // Store file for later upload
                             }));
                           }
