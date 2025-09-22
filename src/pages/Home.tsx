@@ -278,21 +278,23 @@ export default function Home() {
         credentials: 'include',
         body: JSON.stringify({
           ...currentProject,
-          latestStatus: statusSummary
+          latestStatus: `${new Date().toLocaleDateString()} - ${statusSummary}`
         })
       });
 
       if (updateResponse.ok) {
+        const timestampedStatus = `${new Date().toLocaleDateString()} - ${statusSummary}`;
+        
         // Update local project data
         setProjects(prevProjects => 
           prevProjects.map(p => 
-            p.id === currentProject.id ? { ...p, latestStatus: statusSummary } : p
+            p.id === currentProject.id ? { ...p, latestStatus: timestampedStatus } : p
           )
         );
         
         // Update viewing project if it's the same one
         if (viewingProject && viewingProject.id === currentProject.id) {
-          setViewingProject(prev => ({ ...prev, latestStatus: statusSummary }));
+          setViewingProject(prev => ({ ...prev, latestStatus: timestampedStatus }));
         }
         
         // Close modal and reset state
@@ -1685,445 +1687,236 @@ export default function Home() {
               </div>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr)', gap: 16 }}>
-              {/* Row 1 */}
-              <div style={{ minWidth: 0, width: '100%' }}>
-                <label style={{ display: 'block', marginBottom: 6, fontSize: 13, fontWeight: 500, color: '#333' }}>
-                  Name
-                </label>
-                <div style={{
-                  padding: 12,
-                  border: '1px solid #ddd',
-                  borderRadius: 6,
-                  fontSize: 13,
-                  background: '#f8f9fa',
-                  height: '44px', // Fixed height same as Name field
-                  overflow: 'hidden',
-                  display: 'flex',
-                  alignItems: 'center'
-                }}>
-                  {viewingProject.name || '-'}
+            {/* 3-Column Layout */}
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 24, height: '100%' }}>
+              
+              {/* LEFT COLUMN - Basic Project Info */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+                <h3 style={{ margin: 0, fontSize: 16, fontWeight: 500, color: '#333', borderBottom: '2px solid #007bff', paddingBottom: 8 }}>
+                  Project Details
+                </h3>
+                
+                {/* Name */}
+                <div>
+                  <label style={{ display: 'block', marginBottom: 6, fontSize: 13, fontWeight: 500, color: '#333' }}>
+                    Name
+                  </label>
+                  <div style={{
+                    padding: 12,
+                    border: '1px solid #ddd',
+                    borderRadius: 6,
+                    fontSize: 13,
+                    background: '#f8f9fa',
+                    minHeight: '20px'
+                  }}>
+                    {viewingProject.name || '-'}
+                  </div>
+                </div>
+
+                {/* Description */}
+                <div>
+                  <label style={{ display: 'block', marginBottom: 6, fontSize: 13, fontWeight: 500, color: '#333' }}>
+                    Description
+                  </label>
+                  <div style={{
+                    padding: 12,
+                    border: '1px solid #ddd',
+                    borderRadius: 6,
+                    fontSize: 13,
+                    background: '#f8f9fa',
+                    minHeight: '60px',
+                    whiteSpace: 'pre-wrap'
+                  }}>
+                    {viewingProject.description || '-'}
+                  </div>
+                </div>
+
+                {/* Status */}
+                <div>
+                  <label style={{ display: 'block', marginBottom: 6, fontSize: 13, fontWeight: 500, color: '#333' }}>
+                    Status
+                  </label>
+                  <div style={{
+                    padding: 12,
+                    border: '1px solid #ddd',
+                    borderRadius: 6,
+                    fontSize: 13,
+                    background: '#f8f9fa',
+                    minHeight: '20px'
+                  }}>
+                    {viewingProject.status || '-'}
+                  </div>
+                </div>
+
+                {/* Source */}
+                <div>
+                  <label style={{ display: 'block', marginBottom: 6, fontSize: 13, fontWeight: 500, color: '#333' }}>
+                    Source
+                  </label>
+                  <div style={{
+                    padding: 12,
+                    border: '1px solid #ddd',
+                    borderRadius: 6,
+                    fontSize: 13,
+                    background: '#f8f9fa',
+                    minHeight: '20px'
+                  }}>
+                    {viewingProject.source || '-'}
+                  </div>
+                </div>
+
+                {/* Monthly Impact */}
+                <div>
+                  <label style={{ display: 'block', marginBottom: 6, fontSize: 13, fontWeight: 500, color: '#333' }}>
+                    Monthly Impact
+                  </label>
+                  <div style={{
+                    padding: 12,
+                    border: '1px solid #ddd',
+                    borderRadius: 6,
+                    fontSize: 13,
+                    background: '#f8f9fa',
+                    minHeight: '20px'
+                  }}>
+                    {viewingProject.monthlyImpact || '-'}
+                  </div>
+                </div>
+
+                {/* Type */}
+                <div>
+                  <label style={{ display: 'block', marginBottom: 6, fontSize: 13, fontWeight: 500, color: '#333' }}>
+                    Type
+                  </label>
+                  <div style={{
+                    padding: 12,
+                    border: '1px solid #ddd',
+                    borderRadius: 6,
+                    fontSize: 13,
+                    background: '#f8f9fa',
+                    minHeight: '20px'
+                  }}>
+                    {viewingProject.type || '-'}
+                  </div>
+                </div>
+
+                {/* Hours Per Month */}
+                <div>
+                  <label style={{ display: 'block', marginBottom: 6, fontSize: 13, fontWeight: 500, color: '#333' }}>
+                    Hours Per Month
+                  </label>
+                  <div style={{
+                    padding: 12,
+                    border: '1px solid #ddd',
+                    borderRadius: 6,
+                    fontSize: 13,
+                    background: '#f8f9fa',
+                    minHeight: '20px'
+                  }}>
+                    {viewingProject.hoursPerMonth || '-'}
+                  </div>
                 </div>
               </div>
 
-              <div style={{ minWidth: 0, width: '100%' }}>
-                <label style={{ display: 'block', marginBottom: 6, fontSize: 13, fontWeight: 500, color: '#333' }}>
-                  Description
-                </label>
-                <div style={{
-                  padding: 12,
-                  border: '1px solid #ddd',
-                  borderRadius: 6,
-                  fontSize: 13,
-                  background: '#f8f9fa',
-                  height: expandedFields.description ? 'auto' : '44px',
-                  overflow: expandedFields.description ? 'visible' : 'hidden',
-                  position: 'relative',
-                  cursor: viewingProject.description && viewingProject.description.length > 50 ? 'pointer' : 'default',
-                  display: expandedFields.description ? 'block' : 'flex',
-                  alignItems: expandedFields.description ? 'flex-start' : 'center',
-                  transition: 'height 0.2s ease'
-                }}
-                onClick={() => {
-                  if (viewingProject.description && viewingProject.description.length > 50) {
-                    toggleFieldExpansion('description');
-                  }
-                }}
-                >
-                  {viewingProject.description || '-'}
-                  {viewingProject.description && viewingProject.description.length > 50 && !expandedFields.description && (
-                    <div style={{
-                      position: 'absolute',
-                      bottom: 2,
-                      right: 8,
-                      fontSize: 11,
-                      color: '#007bff',
-                      background: '#f8f9fa',
-                      padding: '0 4px',
-                      fontWeight: 'bold'
-                    }}>
-                      ⋯ click to expand
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              <div style={{ minWidth: 0, width: '100%' }}>
-                <label style={{ display: 'block', marginBottom: 6, fontSize: 13, fontWeight: 500, color: '#333' }}>
-                  Status
-                </label>
-                <div style={{
-                  padding: 12,
-                  border: '1px solid #ddd',
-                  borderRadius: 6,
-                  fontSize: 13,
-                  background: '#f8f9fa',
-                  height: '44px', // Fixed height same as Name field
-                  overflow: 'hidden',
-                  display: 'flex',
-                  alignItems: 'center'
-                }}>
-                  {viewingProject.status || '-'}
-                </div>
-              </div>
-
-              {/* Row 2 */}
-              <div style={{ minWidth: 0, width: '100%' }}>
-                <label style={{ display: 'block', marginBottom: 6, fontSize: 13, fontWeight: 500, color: '#333' }}>
+              {/* MIDDLE COLUMN - Latest Status */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+                <h3 style={{ margin: 0, fontSize: 16, fontWeight: 500, color: '#333', borderBottom: '2px solid #28a745', paddingBottom: 8 }}>
                   Latest Status
-                </label>
+                </h3>
+                
                 <div style={{
-                  padding: 12,
+                  padding: 16,
                   border: '1px solid #ddd',
-                  borderRadius: 6,
+                  borderRadius: 8,
                   fontSize: 13,
                   background: '#f8f9fa',
-                  height: '44px',
-                  overflow: 'hidden',
-                  display: 'flex',
-                  alignItems: 'center'
+                  minHeight: '200px',
+                  whiteSpace: 'pre-wrap',
+                  lineHeight: 1.5,
+                  flex: 1
                 }}>
-                  {viewingProject.latestStatus || '-'}
+                  {viewingProject.latestStatus || 'No status available'}
                 </div>
               </div>
 
-              <div style={{ minWidth: 0, width: '100%' }}>
-                {/* Empty space to maintain grid alignment */}
-              </div>
-
-              {/* Row 3 */}
-              <div style={{ minWidth: 0, width: '100%' }}>
-                <label style={{ display: 'block', marginBottom: 6, fontSize: 13, fontWeight: 500, color: '#333' }}>
-                  Source
-                </label>
-                <div style={{
-                  padding: 12,
-                  border: '1px solid #ddd',
-                  borderRadius: 6,
-                  fontSize: 13,
-                  background: '#f8f9fa',
-                  height: '44px', // Fixed height same as Name field
-                  overflow: 'hidden',
-                  display: 'flex',
-                  alignItems: 'center'
-                }}>
-                  {viewingProject.source || '-'}
+              {/* RIGHT COLUMN - Tasks */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+                <h3 style={{ margin: 0, fontSize: 16, fontWeight: 500, color: '#333', borderBottom: '2px solid #dc3545', paddingBottom: 8 }}>
+                  Tasks
+                </h3>
+                
+                {/* Do Tasks */}
+                <div>
+                  <label style={{ display: 'block', marginBottom: 6, fontSize: 13, fontWeight: 500, color: '#dc3545' }}>
+                    Do ({(() => {
+                      const doTasks = tasks.filter(task => task.status === 'Do' && task.project === viewingProject.id);
+                      return doTasks.length;
+                    })()})
+                  </label>
+                  <div style={{
+                    padding: 12,
+                    border: '1px solid #ddd',
+                    borderRadius: 6,
+                    fontSize: 12,
+                    background: '#fff5f5',
+                    minHeight: '60px',
+                    maxHeight: '120px',
+                    overflow: 'auto'
+                  }}>
+                    {(() => {
+                      const doTasks = tasks.filter(task => task.status === 'Do' && task.project === viewingProject.id);
+                      return doTasks.length > 0 ? doTasks.map(task => `• ${task.title}`).join('\n') : 'No tasks';
+                    })()}
+                  </div>
                 </div>
-              </div>
 
-              <div style={{ minWidth: 0, width: '100%' }}>
-                <label style={{ display: 'block', marginBottom: 6, fontSize: 13, fontWeight: 500, color: '#333' }}>
-                  Type
-                </label>
-                <div style={{
-                  padding: 12,
-                  border: '1px solid #ddd',
-                  borderRadius: 6,
-                  fontSize: 13,
-                  background: '#f8f9fa',
-                  height: '44px', // Fixed height same as Name field
-                  overflow: 'hidden',
-                  display: 'flex',
-                  alignItems: 'center'
-                }}>
-                  {viewingProject.type || '-'}
+                {/* Doing Tasks */}
+                <div>
+                  <label style={{ display: 'block', marginBottom: 6, fontSize: 13, fontWeight: 500, color: '#ffc107' }}>
+                    Doing ({(() => {
+                      const doingTasks = tasks.filter(task => task.status === 'Doing' && task.project === viewingProject.id);
+                      return doingTasks.length;
+                    })()})
+                  </label>
+                  <div style={{
+                    padding: 12,
+                    border: '1px solid #ddd',
+                    borderRadius: 6,
+                    fontSize: 12,
+                    background: '#fffbf0',
+                    minHeight: '60px',
+                    maxHeight: '120px',
+                    overflow: 'auto'
+                  }}>
+                    {(() => {
+                      const doingTasks = tasks.filter(task => task.status === 'Doing' && task.project === viewingProject.id);
+                      return doingTasks.length > 0 ? doingTasks.map(task => `• ${task.title}`).join('\n') : 'No tasks';
+                    })()}
+                  </div>
                 </div>
-              </div>
 
-              <div style={{ minWidth: 0, width: '100%' }}>
-                <label style={{ display: 'block', marginBottom: 6, fontSize: 13, fontWeight: 500, color: '#333' }}>
-                  Individuals
-                </label>
-                <div style={{
-                  padding: 12,
-                  border: '1px solid #ddd',
-                  borderRadius: 6,
-                  fontSize: 13,
-                  background: '#f8f9fa',
-                  height: expandedFields.individuals ? 'auto' : '44px',
-                  overflow: expandedFields.individuals ? 'visible' : 'hidden',
-                  position: 'relative',
-                  cursor: (() => {
-                    const individualsText = Array.isArray(viewingProject.individuals) ? viewingProject.individuals.join(', ') : (viewingProject.individuals || '');
-                    return individualsText.length > 50 ? 'pointer' : 'default';
-                  })(),
-                  display: expandedFields.individuals ? 'block' : 'flex',
-                  alignItems: expandedFields.individuals ? 'flex-start' : 'center',
-                  transition: 'height 0.2s ease'
-                }}
-                onClick={() => {
-                  const individualsText = Array.isArray(viewingProject.individuals) ? viewingProject.individuals.join(', ') : (viewingProject.individuals || '');
-                  if (individualsText.length > 50) {
-                    toggleFieldExpansion('individuals');
-                  }
-                }}
-                >
-                  {Array.isArray(viewingProject.individuals) ? viewingProject.individuals.join(', ') : (viewingProject.individuals || '-')}
-                  {(() => {
-                    const individualsText = Array.isArray(viewingProject.individuals) ? viewingProject.individuals.join(', ') : (viewingProject.individuals || '');
-                    return individualsText.length > 50 && !expandedFields.individuals && (
-                      <div style={{
-                        position: 'absolute',
-                        bottom: 2,
-                        right: 8,
-                        fontSize: 11,
-                        color: '#007bff',
-                        background: '#f8f9fa',
-                        padding: '0 4px',
-                        fontWeight: 'bold'
-                      }}>
-                        ⋯ click to expand
-                      </div>
-                    );
-                  })()}
-                </div>
-              </div>
-
-              {/* Row 3 */}
-              <div style={{ minWidth: 0, width: '100%' }}>
-                <label style={{ display: 'block', marginBottom: 6, fontSize: 13, fontWeight: 500, color: '#333' }}>
-                  Monthly Impact
-                </label>
-                <div style={{
-                  padding: 12,
-                  border: '1px solid #ddd',
-                  borderRadius: 6,
-                  fontSize: 13,
-                  background: '#f8f9fa',
-                  height: '44px', // Fixed height same as Name field
-                  overflow: 'hidden',
-                  display: 'flex',
-                  alignItems: 'center'
-                }}>
-                  {viewingProject.monthlyImpact || '-'}
-                </div>
-              </div>
-
-              <div style={{ minWidth: 0, width: '100%' }}>
-                <label style={{ display: 'block', marginBottom: 6, fontSize: 13, fontWeight: 500, color: '#333' }}>
-                  Hours Per Month
-                </label>
-                <div style={{
-                  padding: 12,
-                  border: '1px solid #ddd',
-                  borderRadius: 6,
-                  fontSize: 13,
-                  background: '#f8f9fa',
-                  height: '44px', // Fixed height same as Name field
-                  overflow: 'hidden',
-                  display: 'flex',
-                  alignItems: 'center'
-                }}>
-                  {viewingProject.hoursPerMonth || '-'}
-                </div>
-              </div>
-
-              <div style={{ minWidth: 0, width: '100%' }}>
-                <label style={{ display: 'block', marginBottom: 6, fontSize: 13, fontWeight: 500, color: '#333' }}>
-                  Updates
-                </label>
-                <div style={{
-                  padding: 12,
-                  border: '1px solid #ddd',
-                  borderRadius: 6,
-                  fontSize: 13,
-                  background: '#f8f9fa',
-                  height: expandedFields.updates ? 'auto' : '44px',
-                  overflow: expandedFields.updates ? 'visible' : 'hidden',
-                  position: 'relative',
-                  cursor: viewingProject.updates && viewingProject.updates.length > 50 ? 'pointer' : 'default',
-                  display: expandedFields.updates ? 'block' : 'flex',
-                  alignItems: expandedFields.updates ? 'flex-start' : 'center',
-                  whiteSpace: expandedFields.updates ? 'pre-wrap' : 'nowrap',
-                  transition: 'height 0.2s ease'
-                }}
-                onClick={() => {
-                  if (viewingProject.updates && viewingProject.updates.length > 50) {
-                    toggleFieldExpansion('updates');
-                  }
-                }}
-                >
-                  {viewingProject.updates || '-'}
-                  {viewingProject.updates && viewingProject.updates.length > 50 && !expandedFields.updates && (
-                    <div style={{
-                      position: 'absolute',
-                      bottom: 2,
-                      right: 8,
-                      fontSize: 11,
-                      color: '#007bff',
-                      background: '#f8f9fa',
-                      padding: '0 4px',
-                      fontWeight: 'bold'
-                    }}>
-                      ⋯ click to expand
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              {/* Row 4 - Tasks */}
-              <div style={{ minWidth: 0, width: '100%' }}>
-                <label style={{ display: 'block', marginBottom: 6, fontSize: 13, fontWeight: 500, color: '#333' }}>
-                  Tasks - Do
-                </label>
-                <div style={{
-                  padding: 12,
-                  border: '1px solid #ddd',
-                  borderRadius: 6,
-                  fontSize: 13,
-                  background: '#f8f9fa',
-                  height: expandedFields.tasksDo ? 'auto' : '44px',
-                  overflow: expandedFields.tasksDo ? 'visible' : 'hidden',
-                  position: 'relative',
-                  cursor: (() => {
-                    const doTasks = tasks.filter(task => task.status === 'Do' && task.project === viewingProject.id);
-                    const tasksText = doTasks.map(task => task.title).join(', ');
-                    return tasksText.length > 50 ? 'pointer' : 'default';
-                  })(),
-                  display: expandedFields.tasksDo ? 'block' : 'flex',
-                  alignItems: expandedFields.tasksDo ? 'flex-start' : 'center',
-                  transition: 'height 0.2s ease'
-                }}
-                onClick={() => {
-                  const doTasks = tasks.filter(task => task.status === 'Do' && task.project === viewingProject.id);
-                  const tasksText = doTasks.map(task => task.title).join(', ');
-                  if (tasksText.length > 50) {
-                    toggleFieldExpansion('tasksDo');
-                  }
-                }}
-                >
-                  {(() => {
-                    const doTasks = tasks.filter(task => task.status === 'Do' && task.project === viewingProject.id);
-                    return doTasks.length > 0 ? doTasks.map(task => task.title).join(', ') : 'No tasks';
-                  })()}
-                  {(() => {
-                    const doTasks = tasks.filter(task => task.status === 'Do' && task.project === viewingProject.id);
-                    const tasksText = doTasks.map(task => task.title).join(', ');
-                    return tasksText.length > 50 && !expandedFields.tasksDo && (
-                      <div style={{
-                        position: 'absolute',
-                        bottom: 2,
-                        right: 8,
-                        fontSize: 11,
-                        color: '#007bff',
-                        background: '#f8f9fa',
-                        padding: '0 4px',
-                        fontWeight: 'bold'
-                      }}>
-                        ⋯ click to expand
-                      </div>
-                    );
-                  })()}
-                </div>
-              </div>
-
-              <div style={{ minWidth: 0, width: '100%' }}>
-                <label style={{ display: 'block', marginBottom: 6, fontSize: 13, fontWeight: 500, color: '#333' }}>
-                  Tasks - Doing
-                </label>
-                <div style={{
-                  padding: 12,
-                  border: '1px solid #ddd',
-                  borderRadius: 6,
-                  fontSize: 13,
-                  background: '#f8f9fa',
-                  height: expandedFields.tasksDoing ? 'auto' : '44px',
-                  overflow: expandedFields.tasksDoing ? 'visible' : 'hidden',
-                  position: 'relative',
-                  cursor: (() => {
-                    const doingTasks = tasks.filter(task => task.status === 'Doing' && task.project === viewingProject.id);
-                    const tasksText = doingTasks.map(task => task.title).join(', ');
-                    return tasksText.length > 50 ? 'pointer' : 'default';
-                  })(),
-                  display: expandedFields.tasksDoing ? 'block' : 'flex',
-                  alignItems: expandedFields.tasksDoing ? 'flex-start' : 'center',
-                  transition: 'height 0.2s ease'
-                }}
-                onClick={() => {
-                  const doingTasks = tasks.filter(task => task.status === 'Doing' && task.project === viewingProject.id);
-                  const tasksText = doingTasks.map(task => task.title).join(', ');
-                  if (tasksText.length > 50) {
-                    toggleFieldExpansion('tasksDoing');
-                  }
-                }}
-                >
-                  {(() => {
-                    const doingTasks = tasks.filter(task => task.status === 'Doing' && task.project === viewingProject.id);
-                    return doingTasks.length > 0 ? doingTasks.map(task => task.title).join(', ') : 'No tasks';
-                  })()}
-                  {(() => {
-                    const doingTasks = tasks.filter(task => task.status === 'Doing' && task.project === viewingProject.id);
-                    const tasksText = doingTasks.map(task => task.title).join(', ');
-                    return tasksText.length > 50 && !expandedFields.tasksDoing && (
-                      <div style={{
-                        position: 'absolute',
-                        bottom: 2,
-                        right: 8,
-                        fontSize: 11,
-                        color: '#007bff',
-                        background: '#f8f9fa',
-                        padding: '0 4px',
-                        fontWeight: 'bold'
-                      }}>
-                        ⋯ click to expand
-                      </div>
-                    );
-                  })()}
-                </div>
-              </div>
-
-              <div style={{ minWidth: 0, width: '100%' }}>
-                <label style={{ display: 'block', marginBottom: 6, fontSize: 13, fontWeight: 500, color: '#333' }}>
-                  Tasks - Done
-                </label>
-                <div style={{
-                  padding: 12,
-                  border: '1px solid #ddd',
-                  borderRadius: 6,
-                  fontSize: 13,
-                  background: '#f8f9fa',
-                  height: expandedFields.tasksDone ? 'auto' : '44px',
-                  overflow: expandedFields.tasksDone ? 'visible' : 'hidden',
-                  position: 'relative',
-                  cursor: (() => {
-                    const doneTasks = tasks.filter(task => task.status === 'Done' && task.project === viewingProject.id);
-                    const tasksText = doneTasks.map(task => task.title).join(', ');
-                    return tasksText.length > 50 ? 'pointer' : 'default';
-                  })(),
-                  display: expandedFields.tasksDone ? 'block' : 'flex',
-                  alignItems: expandedFields.tasksDone ? 'flex-start' : 'center',
-                  transition: 'height 0.2s ease'
-                }}
-                onClick={() => {
-                  const doneTasks = tasks.filter(task => task.status === 'Done' && task.project === viewingProject.id);
-                  const tasksText = doneTasks.map(task => task.title).join(', ');
-                  if (tasksText.length > 50) {
-                    toggleFieldExpansion('tasksDone');
-                  }
-                }}
-                >
-                  {(() => {
-                    const doneTasks = tasks.filter(task => task.status === 'Done' && task.project === viewingProject.id);
-                    return doneTasks.length > 0 ? doneTasks.map(task => task.title).join(', ') : 'No tasks';
-                  })()}
-                  {(() => {
-                    const doneTasks = tasks.filter(task => task.status === 'Done' && task.project === viewingProject.id);
-                    const tasksText = doneTasks.map(task => task.title).join(', ');
-                    return tasksText.length > 50 && !expandedFields.tasksDone && (
-                      <div style={{
-                        position: 'absolute',
-                        bottom: 2,
-                        right: 8,
-                        fontSize: 11,
-                        color: '#007bff',
-                        background: '#f8f9fa',
-                        padding: '0 4px',
-                        fontWeight: 'bold'
-                      }}>
-                        ⋯ click to expand
-                      </div>
-                    );
-                  })()}
+                {/* Done Tasks */}
+                <div>
+                  <label style={{ display: 'block', marginBottom: 6, fontSize: 13, fontWeight: 500, color: '#28a745' }}>
+                    Done ({(() => {
+                      const doneTasks = tasks.filter(task => task.status === 'Done' && task.project === viewingProject.id);
+                      return doneTasks.length;
+                    })()})
+                  </label>
+                  <div style={{
+                    padding: 12,
+                    border: '1px solid #ddd',
+                    borderRadius: 6,
+                    fontSize: 12,
+                    background: '#f0fff4',
+                    minHeight: '60px',
+                    maxHeight: '120px',
+                    overflow: 'auto'
+                  }}>
+                    {(() => {
+                      const doneTasks = tasks.filter(task => task.status === 'Done' && task.project === viewingProject.id);
+                      return doneTasks.length > 0 ? doneTasks.map(task => `• ${task.title}`).join('\n') : 'No tasks';
+                    })()}
+                  </div>
                 </div>
               </div>
             </div>
