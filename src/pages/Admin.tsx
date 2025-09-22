@@ -18,6 +18,7 @@ function AdminPage() {
   const [projectFormData, setProjectFormData] = useState({
     name: '',
     status: '',
+    latestStatus: '',
     logo: null
   })
   const [taskFormData, setTaskFormData] = useState({
@@ -412,6 +413,7 @@ function AdminPage() {
       const name = formData.get('name')
       const description = formData.get('description')
       const status = formData.get('status')
+      const latestStatus = formData.get('latestStatus')
       const source = formData.get('source')
       const type = formData.get('type')
       const individuals = formData.get('individuals')
@@ -433,6 +435,7 @@ function AdminPage() {
         name,
         description,
         status,
+        latestStatus,
         source,
         type,
         individuals: individuals ? individuals.split(',').map(i => i.trim()).filter(i => i) : [],
@@ -1600,8 +1603,8 @@ function AdminPage() {
                 </div>
 
                 <form onSubmit={handleSaveProject}>
-                  {/* Row 1: Name, Description, Status */}
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 16, marginBottom: 16 }}>
+                  {/* Row 1: Name, Description, Status, Latest Status */}
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: 16, marginBottom: 16 }}>
                   {/* Project Name */}
                     <div>
                     <label style={{ display: 'block', marginBottom: 6, fontSize: 13, fontWeight: 500, color: '#333' }}>
@@ -1672,6 +1675,28 @@ function AdminPage() {
                         <option value="Lost">Lost</option>
                         <option value="Archived">Archived</option>
                     </select>
+                    </div>
+
+                    {/* Latest Status */}
+                    <div>
+                      <label style={{ display: 'block', marginBottom: 6, fontSize: 13, fontWeight: 500, color: '#333' }}>
+                        Latest Status
+                      </label>
+                      <input
+                        type="text"
+                        name="latestStatus"
+                        defaultValue={editingProject.latestStatus || ''}
+                        style={{ 
+                          width: '100%', 
+                          padding: 12, 
+                          border: '1px solid #ddd', 
+                          borderRadius: 6,
+                          fontSize: 13,
+                          boxSizing: 'border-box',
+                          height: '44px'
+                        }}
+                        placeholder="Enter latest status"
+                      />
                     </div>
                   </div>
 

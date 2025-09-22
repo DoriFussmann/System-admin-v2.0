@@ -1876,6 +1876,30 @@ export default function Home() {
               {/* Row 2 */}
               <div style={{ minWidth: 0, width: '100%' }}>
                 <label style={{ display: 'block', marginBottom: 6, fontSize: 13, fontWeight: 500, color: '#333' }}>
+                  Latest Status
+                </label>
+                <div style={{
+                  padding: 12,
+                  border: '1px solid #ddd',
+                  borderRadius: 6,
+                  fontSize: 13,
+                  background: '#f8f9fa',
+                  height: '44px',
+                  overflow: 'hidden',
+                  display: 'flex',
+                  alignItems: 'center'
+                }}>
+                  {viewingProject.latestStatus || '-'}
+                </div>
+              </div>
+
+              <div style={{ minWidth: 0, width: '100%' }}>
+                {/* Empty space to maintain grid alignment */}
+              </div>
+
+              {/* Row 3 */}
+              <div style={{ minWidth: 0, width: '100%' }}>
+                <label style={{ display: 'block', marginBottom: 6, fontSize: 13, fontWeight: 500, color: '#333' }}>
                   Source
                 </label>
                 <div style={{
