@@ -285,6 +285,7 @@ app.get('/api/projects', async (req, res) => {
         status: project.status,
         latestStatus: project.latestStatus,
         logoUrl: project.logoUrl,
+        category: project.category,
         createdAt: project.createdAt,
         updatedAt: project.updatedAt,
         ...notes // Spread the notes object to maintain backward compatibility
@@ -300,8 +301,8 @@ app.get('/api/projects', async (req, res) => {
 
 app.post('/api/projects', requireAdminWrites, async (req, res) => {
   try {
-    // Extract title, status, latestStatus, and logoUrl from request body
-    const { name, status, latestStatus, logoUrl, ...otherFields } = req.body;
+    // Extract title, status, latestStatus, logoUrl, and category from request body
+    const { name, status, latestStatus, logoUrl, category, ...otherFields } = req.body;
     
     const newProject = await prisma.project.create({
       data: {
@@ -309,6 +310,7 @@ app.post('/api/projects', requireAdminWrites, async (req, res) => {
         status: status || null,
         latestStatus: latestStatus || null,
         logoUrl: logoUrl || null,
+        category: category || null,
         notes: JSON.stringify(otherFields) // Store other fields in notes
       }
     });
@@ -321,6 +323,7 @@ app.post('/api/projects', requireAdminWrites, async (req, res) => {
       status: newProject.status,
       latestStatus: newProject.latestStatus,
       logoUrl: newProject.logoUrl,
+      category: newProject.category,
       createdAt: newProject.createdAt,
       updatedAt: newProject.updatedAt,
       ...notes
@@ -335,8 +338,8 @@ app.post('/api/projects', requireAdminWrites, async (req, res) => {
 
 app.put('/api/projects/:id', requireAdminWrites, async (req, res) => {
   try {
-    // Extract title, status, latestStatus, and logoUrl from request body
-    const { name, status, latestStatus, logoUrl, ...otherFields } = req.body;
+    // Extract title, status, latestStatus, logoUrl, and category from request body
+    const { name, status, latestStatus, logoUrl, category, ...otherFields } = req.body;
     
     const updatedProject = await prisma.project.update({
       where: { id: req.params.id },
@@ -345,6 +348,7 @@ app.put('/api/projects/:id', requireAdminWrites, async (req, res) => {
         status: status || undefined,
         latestStatus: latestStatus || undefined,
         logoUrl: logoUrl || undefined,
+        category: category || undefined,
         notes: Object.keys(otherFields).length > 0 ? JSON.stringify(otherFields) : undefined
       }
     });
@@ -357,6 +361,7 @@ app.put('/api/projects/:id', requireAdminWrites, async (req, res) => {
       status: updatedProject.status,
       latestStatus: updatedProject.latestStatus,
       logoUrl: updatedProject.logoUrl,
+      category: updatedProject.category,
       createdAt: updatedProject.createdAt,
       updatedAt: updatedProject.updatedAt,
       ...notes

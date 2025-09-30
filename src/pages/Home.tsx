@@ -32,6 +32,12 @@ export default function Home() {
   const [showStatusPreviewModal, setShowStatusPreviewModal] = useState(false)
   const [statusSummary, setStatusSummary] = useState('')
   const [currentProject, setCurrentProject] = useState(null)
+  const [categoryFilter, setCategoryFilter] = useState('')
+
+  // Filter projects based on category
+  const filteredProjects = categoryFilter 
+    ? projects.filter(project => project.category === categoryFilter)
+    : projects
 
   // Check if user is already logged in on component mount
   useEffect(() => {
@@ -645,15 +651,117 @@ export default function Home() {
                       Add Update
                     </button>
                   </div>
-                  <div style={{
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(5, 1fr)',
-                    gap: 16,
-                    width: '100%',
-                    boxSizing: 'border-box',
-                    overflow: 'hidden'
+                  
+                  {/* Category Filter Controls */}
+                  <div style={{ 
+                    display: 'flex', 
+                    gap: 12, 
+                    alignItems: 'center', 
+                    marginBottom: 24,
+                    flexWrap: 'wrap'
                   }}>
-                    {projects.map((project) => (
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                      <label style={{ 
+                        fontSize: 14, 
+                        fontWeight: 500, 
+                        color: '#333',
+                        whiteSpace: 'nowrap'
+                      }}>
+                        Filter by Category:
+                      </label>
+                      <select
+                        value={categoryFilter}
+                        onChange={(e) => setCategoryFilter(e.target.value)}
+                        style={{
+                          padding: '8px 12px',
+                          border: '1px solid #ddd',
+                          borderRadius: 6,
+                          fontSize: 13,
+                          backgroundColor: 'white',
+                          cursor: 'pointer',
+                          minWidth: '180px'
+                        }}
+                      >
+                        <option value="">All Categories</option>
+                        <option value="Client Advisory">Client Advisory</option>
+                        <option value="Ally Advisory">Ally Advisory</option>
+                        <option value="Founder Venture">Founder Venture</option>
+                        <option value="Partner Venture">Partner Venture</option>
+                      </select>
+                    </div>
+                    
+                    {categoryFilter && (
+                      <button
+                        onClick={() => setCategoryFilter('')}
+                        style={{
+                          background: '#6c757d',
+                          color: 'white',
+                          border: 'none',
+                          borderRadius: 6,
+                          padding: '8px 12px',
+                          fontSize: 13,
+                          fontWeight: 500,
+                          cursor: 'pointer',
+                          transition: 'background-color 0.2s ease',
+                          whiteSpace: 'nowrap'
+                        }}
+                        onMouseEnter={(e) => e.target.style.backgroundColor = '#5a6268'}
+                        onMouseLeave={(e) => e.target.style.backgroundColor = '#6c757d'}
+                      >
+                        Clear Filter
+                      </button>
+                    )}
+                    
+                    {categoryFilter && (
+                      <div style={{ 
+                        fontSize: 13, 
+                        color: '#666',
+                        fontStyle: 'italic'
+                      }}>
+                        Showing {filteredProjects.length} of {projects.length} projects
+                      </div>
+                    )}
+                  </div>
+                  
+                  {/* No projects message when filter returns no results */}
+                  {filteredProjects.length === 0 && categoryFilter && (
+                    <div style={{
+                      textAlign: 'center',
+                      padding: '40px 20px',
+                      color: '#666',
+                      fontSize: 14,
+                      fontStyle: 'italic'
+                    }}>
+                      No projects found in the "{categoryFilter}" category.
+                      <br />
+                      <button
+                        onClick={() => setCategoryFilter('')}
+                        style={{
+                          background: 'transparent',
+                          color: '#007bff',
+                          border: 'none',
+                          textDecoration: 'underline',
+                          cursor: 'pointer',
+                          fontSize: 14,
+                          marginTop: 8
+                        }}
+                      >
+                        Clear filter to see all projects
+                      </button>
+                    </div>
+                  )}
+                  
+                  {/* Projects Grid */}
+                  {filteredProjects.length > 0 && (
+                    <div style={{
+                      display: 'grid',
+                      gridTemplateColumns: 'repeat(5, 1fr)',
+                      gap: 16,
+                      width: '100%',
+                      boxSizing: 'border-box',
+                      overflow: 'hidden'
+                    }}>
+                      {filteredProjects.map((project) => (
                       <div
                         key={project.id}
                         style={{
@@ -736,11 +844,12 @@ export default function Home() {
                             padding: '4px 0'
                         }}>
                           {project.name}
-                          </div>
+                        </div>
                         </div>
                       </div>
                     ))}
-                  </div>
+                    </div>
+                  )}
                 </div>
               </div>
             )}
