@@ -19,8 +19,13 @@ function AdminPage() {
     name: '',
     status: '',
     latestStatus: '',
+<<<<<<< HEAD
     logo: null,
     category: ''
+=======
+    category: '',
+    logo: null
+>>>>>>> 9742ffc1cd47a067461c21999328c2982199a515
   })
   const [taskFormData, setTaskFormData] = useState({
     title: '',
@@ -253,8 +258,13 @@ function AdminPage() {
       const newProjectData = {
         name: projectFormData.name,
         status: projectFormData.status,
+<<<<<<< HEAD
         logo: projectFormData.logo, // For now, just store the filename or null
         category: projectFormData.category
+=======
+        category: projectFormData.category,
+        logo: projectFormData.logo // For now, just store the filename or null
+>>>>>>> 9742ffc1cd47a067461c21999328c2982199a515
       }
 
       // Save to server

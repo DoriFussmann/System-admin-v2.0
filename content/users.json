@@ -58,7 +58,7 @@
     "firstName": "Dori",
     "lastName": "Fussmann",
     "email": "dori@thenightventures.com",
-    "password": "$2b$10$PGnCuKzms/2aqWjgLWeeUuNFeQq9kLxVaQAuJDuhBee8ZSO64MJ5u",
+    "password": "$2b$10$A2T89m/.7IPYOj0myBFqouzcFFtooZAKz1PuS89EXqgS4/BlDPzi2",
     "project": "p_kjdptfhl",
     "projectName": "The Night Ventures",
     "pageAccess": {
@@ -69,6 +69,6 @@
     },
     "isSuperadmin": true,
     "createdAt": "2025-09-17T23:36:44.309Z",
-    "updatedAt": "2025-09-22T17:50:25.249Z"
+    "updatedAt": "2025-09-30T12:57:50.323Z"
   }
 ]
