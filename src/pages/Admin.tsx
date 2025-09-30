@@ -19,6 +19,7 @@ function AdminPage() {
     name: '',
     status: '',
     latestStatus: '',
+    category: '',
     logo: null
   })
   const [taskFormData, setTaskFormData] = useState({
@@ -252,6 +253,7 @@ function AdminPage() {
       const newProjectData = {
         name: projectFormData.name,
         status: projectFormData.status,
+        category: projectFormData.category,
         logo: projectFormData.logo // For now, just store the filename or null
       }
 
@@ -414,6 +416,7 @@ function AdminPage() {
       const description = formData.get('description')
       const status = formData.get('status')
       const latestStatus = formData.get('latestStatus')
+      const category = formData.get('category')
       const source = formData.get('source')
       const type = formData.get('type')
       const individuals = formData.get('individuals')
@@ -436,6 +439,7 @@ function AdminPage() {
         description,
         status,
         latestStatus,
+        category,
         source,
         type,
         individuals: individuals ? individuals.split(',').map(i => i.trim()).filter(i => i) : [],
@@ -1396,6 +1400,31 @@ function AdminPage() {
                     </select>
                   </div>
 
+                  {/* Category Dropdown */}
+                  <div style={{ marginBottom: 16 }}>
+                    <label style={{ display: 'block', marginBottom: 6, fontSize: 13, fontWeight: 500, color: '#333' }}>
+                      Category
+                    </label>
+                    <select
+                      value={projectFormData.category}
+                      onChange={(e) => setProjectFormData(prev => ({ ...prev, category: e.target.value }))}
+                      style={{ 
+                        width: '100%', 
+                        padding: 12, 
+                        border: '1px solid #ddd', 
+                        borderRadius: 6,
+                        fontSize: 13,
+                        boxSizing: 'border-box'
+                      }}
+                    >
+                      <option value="">Select category...</option>
+                      <option value="Client Advisory">Client Advisory</option>
+                      <option value="Ally Advisory">Ally Advisory</option>
+                      <option value="Founder Venture">Founder Venture</option>
+                      <option value="Partner Venture">Partner Venture</option>
+                    </select>
+                  </div>
+
                   {/* Upload Logo */}
                   <div style={{ marginBottom: 24 }}>
                     <label style={{ display: 'block', marginBottom: 6, fontSize: 13, fontWeight: 500, color: '#333' }}>
@@ -1603,8 +1632,8 @@ function AdminPage() {
                 </div>
 
                 <form onSubmit={handleSaveProject}>
-                  {/* Row 1: Name, Description, Status, Latest Status */}
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: 16, marginBottom: 16 }}>
+                  {/* Row 1: Name, Description, Status, Latest Status, Category */}
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr', gap: 16, marginBottom: 16 }}>
                   {/* Project Name */}
                     <div>
                     <label style={{ display: 'block', marginBottom: 6, fontSize: 13, fontWeight: 500, color: '#333' }}>
@@ -1697,6 +1726,32 @@ function AdminPage() {
                         }}
                         placeholder="Enter latest status"
                       />
+                    </div>
+
+                    {/* Category */}
+                    <div>
+                      <label style={{ display: 'block', marginBottom: 6, fontSize: 13, fontWeight: 500, color: '#333' }}>
+                        Category
+                      </label>
+                      <select
+                        name="category"
+                        defaultValue={editingProject.category || ''}
+                        style={{ 
+                          width: '100%', 
+                          padding: 12, 
+                          border: '1px solid #ddd', 
+                          borderRadius: 6,
+                          fontSize: 13,
+                          boxSizing: 'border-box',
+                          height: '44px'
+                        }}
+                      >
+                        <option value="">Select category...</option>
+                        <option value="Client Advisory">Client Advisory</option>
+                        <option value="Ally Advisory">Ally Advisory</option>
+                        <option value="Founder Venture">Founder Venture</option>
+                        <option value="Partner Venture">Partner Venture</option>
+                      </select>
                     </div>
                   </div>
 
