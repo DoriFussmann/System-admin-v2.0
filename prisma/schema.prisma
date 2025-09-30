@@ -30,6 +30,7 @@ model Project {
   status       String?
   notes        String?
   latestStatus String?  // Latest Status field
+  category     String?  // Category field: Client Advisory, Ally Advisory, Founder Venture, Partner Venture
   logoUrl      String?  // URL to uploaded logo file
   category     String?  // Project category: Client Advisory, Ally Advisory, Founder Venture, Partner Venture
   createdAt    DateTime @default(now())
