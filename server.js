@@ -284,6 +284,7 @@ app.get('/api/projects', async (req, res) => {
         name: project.title,
         status: project.status,
         latestStatus: project.latestStatus,
+        category: project.category,
         logoUrl: project.logoUrl,
         createdAt: project.createdAt,
         updatedAt: project.updatedAt,
@@ -300,14 +301,15 @@ app.get('/api/projects', async (req, res) => {
 
 app.post('/api/projects', requireAdminWrites, async (req, res) => {
   try {
-    // Extract title, status, latestStatus, and logoUrl from request body
-    const { name, status, latestStatus, logoUrl, ...otherFields } = req.body;
+    // Extract title, status, latestStatus, category, and logoUrl from request body
+    const { name, status, latestStatus, category, logoUrl, ...otherFields } = req.body;
     
     const newProject = await prisma.project.create({
       data: {
         title: name || 'Untitled Project',
         status: status || null,
         latestStatus: latestStatus || null,
+        category: category || null,
         logoUrl: logoUrl || null,
         notes: JSON.stringify(otherFields) // Store other fields in notes
       }
@@ -320,6 +322,7 @@ app.post('/api/projects', requireAdminWrites, async (req, res) => {
       name: newProject.title,
       status: newProject.status,
       latestStatus: newProject.latestStatus,
+      category: newProject.category,
       logoUrl: newProject.logoUrl,
       createdAt: newProject.createdAt,
       updatedAt: newProject.updatedAt,
@@ -335,8 +338,8 @@ app.post('/api/projects', requireAdminWrites, async (req, res) => {
 
 app.put('/api/projects/:id', requireAdminWrites, async (req, res) => {
   try {
-    // Extract title, status, latestStatus, and logoUrl from request body
-    const { name, status, latestStatus, logoUrl, ...otherFields } = req.body;
+    // Extract title, status, latestStatus, category, and logoUrl from request body
+    const { name, status, latestStatus, category, logoUrl, ...otherFields } = req.body;
     
     const updatedProject = await prisma.project.update({
       where: { id: req.params.id },
@@ -344,6 +347,7 @@ app.put('/api/projects/:id', requireAdminWrites, async (req, res) => {
         title: name || undefined,
         status: status || undefined,
         latestStatus: latestStatus || undefined,
+        category: category || undefined,
         logoUrl: logoUrl || undefined,
         notes: Object.keys(otherFields).length > 0 ? JSON.stringify(otherFields) : undefined
       }
@@ -356,6 +360,7 @@ app.put('/api/projects/:id', requireAdminWrites, async (req, res) => {
       name: updatedProject.title,
       status: updatedProject.status,
       latestStatus: updatedProject.latestStatus,
+      category: updatedProject.category,
       logoUrl: updatedProject.logoUrl,
       createdAt: updatedProject.createdAt,
       updatedAt: updatedProject.updatedAt,

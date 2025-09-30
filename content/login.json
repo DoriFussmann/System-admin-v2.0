@@ -1,0 +1,16 @@
+[
+  {
+    "id": "f27bf929-db2e-49c7-b3bc-38bc3711ffc1",
+    "password": "Hello214!",
+    "email": "dori@thenightventures.com",
+    "createdAt": "2025-09-30T13:05:25.357Z",
+    "updatedAt": "2025-09-30T13:05:25.357Z"
+  },
+  {
+    "id": "bd1df5d8-afce-4f31-8d30-0d89df515686",
+    "email": "dori@thenightventures.com",
+    "password": "Hello214!",
+    "createdAt": "2025-09-30T13:07:34.344Z",
+    "updatedAt": "2025-09-30T13:07:34.344Z"
+  }
+]
