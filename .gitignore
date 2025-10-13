@@ -16,6 +16,10 @@ Thumbs.db
 # Ignore temp files only, keep content JSONs
 content/*.tmp-*
 
+# Next.js
+.next/
+out/
+next-env.d.ts
 
 /src/generated/prisma
 .vercel

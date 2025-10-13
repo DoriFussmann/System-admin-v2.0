@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import Link from 'next/link'
 
 export default function Home() {
   const [showLoginModal, setShowLoginModal] = useState(true)
@@ -587,7 +587,7 @@ export default function Home() {
             </div>
                 <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
                   {user && user.isSuperadmin && (
-                    <Link className="btn btn-sm" to="/admin">Admin</Link>
+                    <Link className="btn btn-sm" href="/admin">Admin</Link>
                   )}
                   {user ? (
                     <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
@@ -1212,7 +1212,7 @@ export default function Home() {
                     return (
                       <Link
                         key={pageId}
-                        to={config.path}
+                        href={config.path}
                         className="btn btn-sm"
                         style={{
                           flex: 1,

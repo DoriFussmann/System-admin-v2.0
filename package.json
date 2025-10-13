@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "concurrently \"vite\" \"node server.js\"",
-    "build": "prisma generate && prisma db push --accept-data-loss && vite build",
-    "start": "node server.js",
-    "preview": "concurrently \"vite preview --port 5173\" \"node server.js\"",
+    "dev": "concurrently --kill-others \"next dev\" \"node server.js\"",
+    "build": "prisma generate && prisma db push --accept-data-loss && next build",
+    "start": "concurrently \"next start\" \"node server.js\"",
+    "preview": "concurrently \"npx next start\" \"node server.js\"",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev --name init",
@@ -23,13 +23,14 @@
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
+    "@types/node": "24.7.2",
     "@types/react": "^19.1.13",
     "@types/react-dom": "^19.1.9",
     "@vitejs/plugin-react": "^5.0.3",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-router-dom": "^7.9.1",
-    "typescript": "^5.9.2",
+    "typescript": "5.9.3",
     "vite": "^7.1.5"
   },
   "dependencies": {
@@ -42,6 +43,7 @@
     "express-rate-limit": "^8.1.0",
     "jsonwebtoken": "^9.0.2",
     "multer": "^2.0.2",
+    "next": "^15.5.5",
     "node-fetch": "^2.7.0",
     "pg": "^8.16.3",
     "prisma": "^6.16.2"

@@ -302,13 +302,8 @@ app.get('/api/projects', async (req, res) => {
 
 app.post('/api/projects', requireAdminWrites, async (req, res) => {
   try {
-<<<<<<< HEAD
     // Extract title, status, latestStatus, logoUrl, and category from request body
     const { name, status, latestStatus, logoUrl, category, ...otherFields } = req.body;
-=======
-    // Extract title, status, latestStatus, category, and logoUrl from request body
-    const { name, status, latestStatus, category, logoUrl, ...otherFields } = req.body;
->>>>>>> 9742ffc1cd47a067461c21999328c2982199a515
     
     const newProject = await prisma.project.create({
       data: {
@@ -346,13 +341,8 @@ app.post('/api/projects', requireAdminWrites, async (req, res) => {
 
 app.put('/api/projects/:id', requireAdminWrites, async (req, res) => {
   try {
-<<<<<<< HEAD
     // Extract title, status, latestStatus, logoUrl, and category from request body
     const { name, status, latestStatus, logoUrl, category, ...otherFields } = req.body;
-=======
-    // Extract title, status, latestStatus, category, and logoUrl from request body
-    const { name, status, latestStatus, category, logoUrl, ...otherFields } = req.body;
->>>>>>> 9742ffc1cd47a067461c21999328c2982199a515
     
     const updatedProject = await prisma.project.update({
       where: { id: req.params.id },

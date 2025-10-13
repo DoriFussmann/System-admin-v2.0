@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import Link from 'next/link'
 import withPageAccess from '../lib/withPageAccess'
 
 function AdminPage() {
@@ -19,13 +19,8 @@ function AdminPage() {
     name: '',
     status: '',
     latestStatus: '',
-<<<<<<< HEAD
     logo: null,
     category: ''
-=======
-    category: '',
-    logo: null
->>>>>>> 9742ffc1cd47a067461c21999328c2982199a515
   })
   const [taskFormData, setTaskFormData] = useState({
     title: '',
@@ -539,7 +534,7 @@ function AdminPage() {
         <div className="layout">
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap', justifyContent: 'space-between' }}>
             <div style={{ display: 'flex', alignItems: 'center', height: '24px' }}>
-              <Link to="/" style={{ color: 'inherit', textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
+              <Link href="/" style={{ color: 'inherit', textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
                 {user && user.projectLogo ? (
                   <img 
                     src={user.projectLogo} 
@@ -555,8 +550,8 @@ function AdminPage() {
               </Link>
             </div>
             <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-              <Link className="btn btn-sm" to="/admin">Admin</Link>
-              <Link className="btn btn-sm" to="/">Login</Link>
+              <Link className="btn btn-sm" href="/admin">Admin</Link>
+              <Link className="btn btn-sm" href="/">Login</Link>
             </div>
           </div>
         </div>

@@ -26,19 +26,21 @@ npm run setup
 npm run dev
 ```
 
-The app will be available at `http://localhost:5173`
+The app will be available at:
+- Frontend: `http://localhost:3000` (Next.js with Turbopack)
+- Backend API: `http://localhost:3001` (Express)
 
 ### Development
 
 ```bash
-# Start development server
+# Start development server (Next.js + Express API)
 npm run dev
 
 # Build for production
 npm run build
 
-# Preview production build
-npm run preview
+# Start production server
+npm run start
 ```
 
 ## 💾 Data Persistence Across Machines
@@ -77,13 +79,18 @@ npm run content:status  # Show current content status
 ## 📁 Project Structure
 
 ```
-├── index.html          # Main application page
-├── admin.html          # Admin interface
-├── app.js             # Main application logic
-├── styles.css         # Application styles
-├── content-data.json  # Your project data (tracked in Git)
-├── content-manager.js # Data export/import utility
-└── package.json       # Dependencies and scripts
+├── app/                  # Next.js app directory (pages & layouts)
+├── src/
+│   ├── pages/           # React page components
+│   ├── components/      # Reusable React components
+│   └── lib/             # Utility functions
+├── server.js            # Express API server
+├── prisma/              # Database schema and migrations
+├── public/uploads/      # Uploaded files
+├── styles.css           # Global styles
+├── next.config.ts       # Next.js configuration
+├── tsconfig.json        # TypeScript configuration
+└── package.json         # Dependencies and scripts
 ```
 
 ## 🔄 Workflow for Team Collaboration
@@ -105,10 +112,12 @@ npm run content:status  # Show current content status
 
 ## 🛠️ Technical Details
 
-- **Frontend**: Vanilla JavaScript, HTML, CSS
-- **Build Tool**: Vite
-- **Data Storage**: Browser localStorage (with Git sync via JSON)
-- **No Backend Required**: Fully client-side application
+- **Frontend**: React 19, Next.js 15 with Turbopack
+- **Backend**: Express.js with Prisma ORM
+- **Database**: PostgreSQL (via Prisma)
+- **Styling**: CSS with custom design system
+- **Authentication**: JWT with HTTP-only cookies
+- **File Storage**: Local filesystem (uploads directory)
 
 ## 📝 Data Format
 
