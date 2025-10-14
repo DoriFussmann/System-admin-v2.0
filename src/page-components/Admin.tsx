@@ -438,7 +438,7 @@ function AdminPage() {
   const selectAllUpdates = () => {
     if (!editingProject) return;
     const updates = parseUpdates((editingProject as any).updates || '');
-    const allIndices = new Set(updates.map((_, index) => String(index)));
+    const allIndices = new Set<string>(updates.map((_, index) => String(index)));
     setSelectedUpdates(allIndices);
   };
 
