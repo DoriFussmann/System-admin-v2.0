@@ -2,8 +2,64 @@ import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import withPageAccess from '../lib/withPageAccess'
 
+// Type definitions
+interface User {
+  id: string;
+  email: string;
+  firstName?: string;
+  lastName?: string;
+  password: string;
+  isSuperadmin: boolean;
+  pageAccess: Record<string, boolean>;
+  project?: string;
+  projectName?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+interface Project {
+  id: string;
+  name?: string;
+  title?: string;
+  status?: string;
+  notes?: string;
+  latestStatus?: string;
+  category?: string;
+  logoUrl?: string;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+interface Task {
+  id: string;
+  title: string;
+  description?: string;
+  status?: string;
+  priority?: string;
+  assignee?: string;
+  project?: string;
+  projectName?: string;
+  dueDate?: string;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+interface Page {
+  slug: string;
+  label: string;
+}
+
+interface Collection {
+  id: string;
+  slug: string;
+  label: string;
+  schema: any;
+  createdAt: string;
+  updatedAt: string;
+}
+
 function AdminPage() {
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState<User | null>(null)
   const [showAddUserModal, setShowAddUserModal] = useState(false)
   const [showAddProjectModal, setShowAddProjectModal] = useState(false)
   const [showAddTaskModal, setShowAddTaskModal] = useState(false)
@@ -19,7 +75,7 @@ function AdminPage() {
     name: '',
     status: '',
     latestStatus: '',
-    logo: null,
+    logo: null as File | null,
     category: ''
   })
   const [taskFormData, setTaskFormData] = useState({
@@ -31,25 +87,25 @@ function AdminPage() {
   })
   
   
-  const [pages, setPages] = useState([])
-  const [pageAccess, setPageAccess] = useState({})
+  const [pages, setPages] = useState<Page[]>([])
+  const [pageAccess, setPageAccess] = useState<Record<string, boolean>>({})
   
-  const [users, setUsers] = useState([])
-  const [projects, setProjects] = useState([])
-  const [tasks, setTasks] = useState([])
+  const [users, setUsers] = useState<User[]>([])
+  const [projects, setProjects] = useState<Project[]>([])
+  const [tasks, setTasks] = useState<Task[]>([])
   
   // Collections state
-  const [collections, setCollections] = useState([])
-  const [tasksCollection, setTasksCollection] = useState(null)
+  const [collections, setCollections] = useState<Collection[]>([])
+  const [tasksCollection, setTasksCollection] = useState<Collection | null>(null)
   
-  const [editingUser, setEditingUser] = useState(null)
-  const [editingProject, setEditingProject] = useState(null)
-  const [editingTask, setEditingTask] = useState(null)
+  const [editingUser, setEditingUser] = useState<User | null>(null)
+  const [editingProject, setEditingProject] = useState<Project | null>(null)
+  const [editingTask, setEditingTask] = useState<Task | null>(null)
   const [editingUpdatesMode, setEditingUpdatesMode] = useState(false)
-  const [selectedUpdates, setSelectedUpdates] = useState(new Set())
+  const [selectedUpdates, setSelectedUpdates] = useState(new Set<string>())
 
   // File upload utility
-  const uploadFile = async (file) => {
+  const uploadFile = async (file: File) => {
     const formData = new FormData();
     formData.append('file', file);
     
@@ -200,7 +256,7 @@ function AdminPage() {
         email: userFormData.email,
         password: userFormData.password,
         project: userFormData.project,
-        projectName: selectedProject ? selectedProject.name : 'Unknown Project',
+        projectName: selectedProject ? (selectedProject.name || selectedProject.title || 'Unknown Project') : 'Unknown Project',
         pageAccess: { ...pageAccess },
         isSuperadmin: userFormData.isSuperadmin
       }
