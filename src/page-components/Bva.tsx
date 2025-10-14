@@ -3,6 +3,18 @@ import withPageAccess from '../lib/withPageAccess'
 
 type Row = Record<string, string>
 
+interface User {
+  id: string;
+  email: string;
+  firstName?: string;
+  lastName?: string;
+  isSuperadmin: boolean;
+  pageAccess: Record<string, boolean>;
+  project?: string;
+  projectName?: string;
+  projectLogo?: string;
+}
+
 function parseCSV(text: string) {
   const out: string[][] = []
   let field = ''
@@ -47,7 +59,7 @@ function parseCSV(text: string) {
 }
 
 function BvaPage() {
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [data, setData] = useState<{ headers: string[]; rows: Row[] } | null>(null)

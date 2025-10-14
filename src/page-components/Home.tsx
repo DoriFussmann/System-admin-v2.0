@@ -1,11 +1,23 @@
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 
+interface User {
+  id: string;
+  email: string;
+  firstName?: string;
+  lastName?: string;
+  isSuperadmin: boolean;
+  pageAccess: Record<string, boolean>;
+  project?: string;
+  projectName?: string;
+  projectLogo?: string;
+}
+
 export default function Home() {
   const [showLoginModal, setShowLoginModal] = useState(true)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState<User | null>(null)
   const [projects, setProjects] = useState([])
   const [tasks, setTasks] = useState([])
   const [pages, setPages] = useState([])

@@ -1,8 +1,20 @@
 import React, { useState, useEffect } from 'react'
 import withPageAccess from '../lib/withPageAccess'
 
+interface User {
+  id: string;
+  email: string;
+  firstName?: string;
+  lastName?: string;
+  isSuperadmin: boolean;
+  pageAccess: Record<string, boolean>;
+  project?: string;
+  projectName?: string;
+  projectLogo?: string;
+}
+
 function CsmDashboardPage() {
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState<User | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [searchTerm, setSearchTerm] = useState('')
   const [clinicsData, setClinicsData] = useState([])
