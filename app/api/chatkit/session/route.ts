@@ -19,10 +19,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-<<<<<<< HEAD
-=======
-    // Call OpenAI ChatKit Sessions API
->>>>>>> 8a4857bbd6805340ad535703c76c6b4690d27f5b
     const requestBody = {
       workflow: {
         id: workflowId,
@@ -64,7 +60,3 @@ export async function POST(request: NextRequest) {
   }
 }
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 8a4857bbd6805340ad535703c76c6b4690d27f5b
