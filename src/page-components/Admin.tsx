@@ -451,8 +451,8 @@ function AdminPage() {
   const deleteSelectedUpdates = () => {
     if (!editingProject || selectedUpdates.size === 0) return;
     
-    const updates = parseUpdates(editingProject.updates);
-    const sortedIndices = Array.from(selectedUpdates).sort((a, b) => b - a); // Sort in descending order
+    const updates = parseUpdates((editingProject as any).updates);
+    const sortedIndices = Array.from(selectedUpdates).map(Number).sort((a, b) => b - a); // Sort in descending order
     
     // Remove updates from highest index to lowest to maintain correct indices
     sortedIndices.forEach(index => {
@@ -462,7 +462,7 @@ function AdminPage() {
     setEditingProject(prev => ({
       ...prev,
       updates: stringifyUpdates(updates)
-    }));
+    } as any));
     
     setSelectedUpdates(new Set());
   };
