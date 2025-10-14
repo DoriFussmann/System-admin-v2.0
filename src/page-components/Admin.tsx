@@ -83,6 +83,7 @@ function AdminPage() {
     description: '',
     status: 'Do',
     project: '',
+    assignee: '',
     dueDate: ''
   })
   
@@ -393,6 +394,7 @@ function AdminPage() {
         description: '',
         status: 'Do',
         project: '',
+        assignee: '',
         dueDate: ''
       })
       setShowAddTaskModal(false)
