@@ -695,14 +695,14 @@ function AdminPage() {
                           alignItems: 'center'
                         }}
                         onMouseEnter={(e) => {
-                          e.target.style.background = '#f8f9fa';
-                          e.target.style.transform = 'translateY(-1px)';
-                          e.target.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.1)';
+                          (e.target as HTMLElement).style.background = '#f8f9fa';
+                          (e.target as HTMLElement).style.transform = 'translateY(-1px)';
+                          (e.target as HTMLElement).style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.1)';
                         }}
                         onMouseLeave={(e) => {
-                          e.target.style.background = 'white';
-                          e.target.style.transform = 'translateY(0)';
-                          e.target.style.boxShadow = 'none';
+                          (e.target as HTMLElement).style.background = 'white';
+                          (e.target as HTMLElement).style.transform = 'translateY(0)';
+                          (e.target as HTMLElement).style.boxShadow = 'none';
                         }}
                       >
                         {user.firstName} {user.lastName}
@@ -768,14 +768,14 @@ function AdminPage() {
                           alignItems: 'center'
                         }}
                         onMouseEnter={(e) => {
-                          e.target.style.background = '#f8f9fa';
-                          e.target.style.transform = 'translateY(-1px)';
-                          e.target.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.1)';
+                          (e.target as HTMLElement).style.background = '#f8f9fa';
+                          (e.target as HTMLElement).style.transform = 'translateY(-1px)';
+                          (e.target as HTMLElement).style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.1)';
                         }}
                         onMouseLeave={(e) => {
-                          e.target.style.background = 'white';
-                          e.target.style.transform = 'translateY(0)';
-                          e.target.style.boxShadow = 'none';
+                          (e.target as HTMLElement).style.background = 'white';
+                          (e.target as HTMLElement).style.transform = 'translateY(0)';
+                          (e.target as HTMLElement).style.boxShadow = 'none';
                         }}
                       >
                           {project.name}
@@ -841,14 +841,14 @@ function AdminPage() {
                           gap: 8
                         }}
                         onMouseEnter={(e) => {
-                          e.target.style.background = '#f8f9fa';
-                          e.target.style.transform = 'translateY(-1px)';
-                          e.target.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.1)';
+                          (e.target as HTMLElement).style.background = '#f8f9fa';
+                          (e.target as HTMLElement).style.transform = 'translateY(-1px)';
+                          (e.target as HTMLElement).style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.1)';
                         }}
                         onMouseLeave={(e) => {
-                          e.target.style.background = 'white';
-                          e.target.style.transform = 'translateY(0)';
-                          e.target.style.boxShadow = 'none';
+                          (e.target as HTMLElement).style.background = 'white';
+                          (e.target as HTMLElement).style.transform = 'translateY(0)';
+                          (e.target as HTMLElement).style.boxShadow = 'none';
                         }}
                       >
                         {/* Short Description */}
