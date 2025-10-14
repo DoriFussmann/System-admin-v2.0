@@ -537,6 +537,8 @@ function AdminPage() {
   const handleSaveUser = async (e) => {
     e.preventDefault()
     
+    if (!editingUser) return;
+    
     try {
       const formData = new FormData(e.target)
       const firstName = formData.get('firstName')
@@ -561,7 +563,7 @@ function AdminPage() {
         email,
         password,
         project,
-        projectName: selectedProject ? selectedProject.name : 'Unknown Project',
+        projectName: selectedProject ? (selectedProject.name || selectedProject.title || 'Unknown Project') : 'Unknown Project',
         pageAccess: updatedPageAccess,
         isSuperadmin
       }
