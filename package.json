@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "concurrently --kill-others \"next dev\" \"node server.js\"",
+    "dev": "concurrently --kill-others-on-fail --success=all \"next dev -p 3002\" \"node server.js\"",
     "build": "prisma generate && prisma db push --accept-data-loss && next build",
     "start": "concurrently \"next start\" \"node server.js\"",
     "preview": "concurrently \"npx next start\" \"node server.js\"",
@@ -34,6 +34,8 @@
     "vite": "^7.1.5"
   },
   "dependencies": {
+    "@openai/chatkit": "^1.0.0",
+    "@openai/chatkit-react": "^1.1.1",
     "@prisma/client": "^6.16.2",
     "bcrypt": "^6.0.0",
     "concurrently": "^9.2.1",
@@ -45,6 +47,7 @@
     "multer": "^2.0.2",
     "next": "^15.5.5",
     "node-fetch": "^2.7.0",
+    "openai": "^6.3.0",
     "pg": "^8.16.3",
     "prisma": "^6.16.2"
   }

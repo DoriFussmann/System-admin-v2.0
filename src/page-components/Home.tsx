@@ -33,6 +33,7 @@ export default function Home() {
   const [statusSummary, setStatusSummary] = useState('')
   const [currentProject, setCurrentProject] = useState(null)
   const [categoryFilter, setCategoryFilter] = useState('')
+  const [pages, setPages] = useState([])
 
   // Filter projects based on category
   const filteredProjects = categoryFilter 
@@ -57,6 +58,17 @@ export default function Home() {
           // Load tasks only if user is superadmin
           if (userData.isSuperadmin) {
             loadTasks();
+          }
+
+          // Load page registry to drive access-based navigation
+          try {
+            const pagesRes = await fetch('/api/pages', { credentials: 'include' })
+            if (pagesRes.ok) {
+              const pagesJson = await pagesRes.json()
+              setPages(pagesJson)
+            }
+          } catch (e) {
+            // ignore
           }
         }
       } catch (e) {
@@ -1193,43 +1205,38 @@ export default function Home() {
                   maxWidth: 500,
                   flexWrap: 'wrap'
                 }}>
-                  {Object.entries(user.pageAccess).map(([pageId, hasAccess]) => {
-                    if (!hasAccess) return null;
-                    
-                    // Only show Admin page for superadmins
-                    if (pageId === 'admin' && !user.isSuperadmin) return null;
-                    
-                    const pageConfig = {
-                      home: { name: 'Home', path: '/' },
-                      bva: { name: 'BvA Dashboard', path: '/bva' },
-                      csm: { name: 'CSM Dashboard', path: '/csm-dashboard' },
-                      admin: { name: 'Admin', path: '/admin' }
-                    };
-                    
-                    const config = pageConfig[pageId];
-                    if (!config) return null;
-                    
-                    return (
-                      <Link
-                        key={pageId}
-                        href={config.path}
-                        className="btn btn-sm"
-                        style={{
-                          flex: 1,
-                          textDecoration: 'none',
-                          textAlign: 'center',
-                          fontSize: 12,
-                          padding: '4px 8px',
-                          minHeight: '28px',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center'
-                        }}
-                      >
-                        {config.name}
-                      </Link>
-                    );
-                  })}
+                  {pages
+                    .filter((p) => user.pageAccess?.[p.slug])
+                    .filter((p) => (p.slug === 'admin' ? user.isSuperadmin : true))
+                    .map((p) => {
+                      const path = (() => {
+                        if (p.slug === 'home') return '/'
+                        if (p.slug === 'bva') return '/bva'
+                        if (p.slug === 'csm') return '/csm-dashboard'
+                        if (p.slug === 'admin') return '/admin'
+                        return `/${p.slug}`
+                      })()
+                      return (
+                        <Link
+                          key={p.slug}
+                          href={path}
+                          className="btn btn-sm"
+                          style={{
+                            flex: 1,
+                            textDecoration: 'none',
+                            textAlign: 'center',
+                            fontSize: 12,
+                            padding: '4px 8px',
+                            minHeight: '28px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                          }}
+                        >
+                          {p.label}
+                        </Link>
+                      )
+                    })}
                 </div>
               )}
             </div>

@@ -1,12 +1,13 @@
+"use client";
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 
 export default function withPageAccess<T extends {}>(
   Wrapped: React.ComponentType<T>, 
   slug: string
 ) {
   return (props: T) => {
-    const nav = useNavigate();
+    const router = useRouter();
     const [ok, setOk] = useState<boolean | null>(null);
     
     useEffect(() => {
@@ -15,7 +16,7 @@ export default function withPageAccess<T extends {}>(
           const r = await fetch('/api/auth/me', { credentials: 'include' });
           if (!r.ok) {
             // Not logged in → bounce to home
-            nav('/');
+            router.replace('/');
             return;
           }
           
@@ -24,14 +25,14 @@ export default function withPageAccess<T extends {}>(
             setOk(true);
           } else {
             // No access → bounce to home
-            nav('/');
+            router.replace('/');
           }
         } catch (error) {
           console.error('Page access check failed:', error);
-          nav('/');
+          router.replace('/');
         }
       })();
-    }, [nav]);
+    }, [router]);
     
     // Show loading state while checking access
     if (ok === null) {

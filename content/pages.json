@@ -3,4 +3,5 @@
   { "slug": "bva", "label": "BvA Dashboard" },
   { "slug": "csm", "label": "CSM Dashboard" },
   { "slug": "admin", "label": "Admin" }
+  , { "slug": "agentkit-chat-box", "label": "AgentKit Chat Box" }
 ]
