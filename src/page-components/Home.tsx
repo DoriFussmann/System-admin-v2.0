@@ -8,6 +8,7 @@ export default function Home() {
   const [user, setUser] = useState(null)
   const [projects, setProjects] = useState([])
   const [tasks, setTasks] = useState([])
+  const [pages, setPages] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [draggedTask, setDraggedTask] = useState(null)
   const [dragOverColumn, setDragOverColumn] = useState(null)
@@ -52,7 +53,10 @@ export default function Home() {
           setShowLoginModal(false); // Hide login modal if user is already logged in
           
           // Load projects for all users
-            loadProjects();
+          loadProjects();
+          
+          // Load pages registry
+          loadPages();
           
           // Load tasks only if user is superadmin
           if (userData.isSuperadmin) {
@@ -81,6 +85,21 @@ export default function Home() {
       }
     } catch (e) {
       console.error('Failed to load projects:', e);
+    }
+  };
+
+  // Load pages registry
+  const loadPages = async () => {
+    try {
+      const response = await fetch('/api/pages', {
+        credentials: 'include'
+      });
+      if (response.ok) {
+        const pagesData = await response.json();
+        setPages(pagesData);
+      }
+    } catch (e) {
+      console.error('Failed to load pages:', e);
     }
   };
 
@@ -525,7 +544,10 @@ export default function Home() {
         setPassword('');
         
         // Load projects for all users
-          loadProjects();
+        loadProjects();
+        
+        // Load pages registry
+        loadPages();
         
         // Load tasks only if user is superadmin
         if (userData.isSuperadmin) {
@@ -1185,51 +1207,55 @@ export default function Home() {
               </div>
 
               {/* Page Access Navigation Buttons */}
-              {user.pageAccess && (
+              {user.pageAccess && pages.length > 0 && (
                 <div style={{ 
                   display: 'flex', 
                   gap: 8, 
                   width: '100%',
                   maxWidth: 500,
-                  flexWrap: 'wrap'
+                  flexWrap: 'wrap',
+                  justifyContent: 'center'
                 }}>
-                  {Object.entries(user.pageAccess).map(([pageId, hasAccess]) => {
-                    if (!hasAccess) return null;
-                    
-                    // Only show Admin page for superadmins
-                    if (pageId === 'admin' && !user.isSuperadmin) return null;
-                    
-                    const pageConfig = {
-                      home: { name: 'Home', path: '/' },
-                      bva: { name: 'BvA Dashboard', path: '/bva' },
-                      csm: { name: 'CSM Dashboard', path: '/csm-dashboard' },
-                      admin: { name: 'Admin', path: '/admin' }
-                    };
-                    
-                    const config = pageConfig[pageId];
-                    if (!config) return null;
-                    
-                    return (
-                      <Link
-                        key={pageId}
-                        href={config.path}
-                        className="btn btn-sm"
-                        style={{
-                          flex: 1,
-                          textDecoration: 'none',
-                          textAlign: 'center',
-                          fontSize: 12,
-                          padding: '4px 8px',
-                          minHeight: '28px',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center'
-                        }}
-                      >
-                        {config.name}
-                      </Link>
-                    );
-                  })}
+                  {pages
+                    .filter(page => {
+                      // Only show pages the user has access to
+                      if (!user.pageAccess[page.slug]) return false;
+                      
+                      // Don't show admin page for non-superadmins
+                      if (page.slug === 'admin' && !user.isSuperadmin) return false;
+                      
+                      return true;
+                    })
+                    .map(page => {
+                      // Map slug to path
+                      const getPagePath = (slug) => {
+                        if (slug === 'home') return '/';
+                        if (slug === 'csm') return '/csm-dashboard';
+                        return `/${slug}`;
+                      };
+                      
+                      return (
+                        <Link
+                          key={page.slug}
+                          href={getPagePath(page.slug)}
+                          className="btn btn-sm"
+                          style={{
+                            flex: 1,
+                            textDecoration: 'none',
+                            textAlign: 'center',
+                            fontSize: 13,
+                            padding: '8px 16px',
+                            minHeight: '36px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            minWidth: '120px'
+                          }}
+                        >
+                          {page.label}
+                        </Link>
+                      );
+                    })}
                 </div>
               )}
             </div>
