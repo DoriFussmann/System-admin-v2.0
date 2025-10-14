@@ -13,6 +13,7 @@ interface User {
   pageAccess: Record<string, boolean>;
   project?: string;
   projectName?: string;
+  projectLogo?: string;
   createdAt: string;
   updatedAt: string;
 }
