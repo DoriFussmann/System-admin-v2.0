@@ -22,10 +22,17 @@ interface Project {
   id: string;
   name?: string;
   title?: string;
+  description?: string;
   status?: string;
   notes?: string;
   latestStatus?: string;
   category?: string;
+  source?: string;
+  type?: string;
+  individuals?: string[];
+  monthlyImpact?: number;
+  hoursPerMonth?: number;
+  updates?: string;
   logoUrl?: string;
   createdAt?: string;
   updatedAt?: string;
@@ -1668,7 +1675,7 @@ function AdminPage() {
                         accept="image/*"
                         style={{ display: 'none' }}
                         onChange={(e) => {
-                          const file = e.target.files[0];
+                          const file = e.target.files?.[0];
                           if (file) {
                             // Create a temporary preview URL for immediate display
                             const previewUrl = URL.createObjectURL(file);
@@ -1676,7 +1683,7 @@ function AdminPage() {
                               ...prev,
                               logoUrl: previewUrl,
                               _tempFile: file // Store file for later upload
-                            }));
+                            } as any));
                           }
                         }}
                       />
