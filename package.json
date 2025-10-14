@@ -4,7 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+<<<<<<< HEAD
     "dev": "concurrently --kill-others \"next dev\" \"node server.js\"",
+=======
+    "dev": "concurrently --kill-others-on-fail --success=all \"next dev -p 3002\" \"node server.js\"",
+>>>>>>> 8a4857bbd6805340ad535703c76c6b4690d27f5b
     "build": "prisma generate && prisma db push --accept-data-loss && next build",
     "start": "concurrently \"next start\" \"node server.js\"",
     "preview": "concurrently \"npx next start\" \"node server.js\"",

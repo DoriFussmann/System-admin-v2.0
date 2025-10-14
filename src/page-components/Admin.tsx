@@ -543,6 +543,12 @@ function AdminPage() {
                   />
                 ) : null}
               </Link>
+<<<<<<< HEAD
+=======
+              <Link className="btn btn-sm" href="/" style={{ marginLeft: 8 }}>
+                Home
+              </Link>
+>>>>>>> 8a4857bbd6805340ad535703c76c6b4690d27f5b
             </div>
             <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
               <Link className="btn btn-sm" href="/admin">Admin</Link>

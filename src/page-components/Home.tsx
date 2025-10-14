@@ -8,7 +8,10 @@ export default function Home() {
   const [user, setUser] = useState(null)
   const [projects, setProjects] = useState([])
   const [tasks, setTasks] = useState([])
+<<<<<<< HEAD
   const [pages, setPages] = useState([])
+=======
+>>>>>>> 8a4857bbd6805340ad535703c76c6b4690d27f5b
   const [isLoading, setIsLoading] = useState(true)
   const [draggedTask, setDraggedTask] = useState(null)
   const [dragOverColumn, setDragOverColumn] = useState(null)
@@ -34,6 +37,10 @@ export default function Home() {
   const [statusSummary, setStatusSummary] = useState('')
   const [currentProject, setCurrentProject] = useState(null)
   const [categoryFilter, setCategoryFilter] = useState('')
+<<<<<<< HEAD
+=======
+  const [pages, setPages] = useState([])
+>>>>>>> 8a4857bbd6805340ad535703c76c6b4690d27f5b
 
   // Filter projects based on category
   const filteredProjects = categoryFilter 
@@ -53,15 +60,33 @@ export default function Home() {
           setShowLoginModal(false); // Hide login modal if user is already logged in
           
           // Load projects for all users
+<<<<<<< HEAD
           loadProjects();
           
           // Load pages registry
           loadPages();
+=======
+            loadProjects();
+>>>>>>> 8a4857bbd6805340ad535703c76c6b4690d27f5b
           
           // Load tasks only if user is superadmin
           if (userData.isSuperadmin) {
             loadTasks();
           }
+<<<<<<< HEAD
+=======
+
+          // Load page registry to drive access-based navigation
+          try {
+            const pagesRes = await fetch('/api/pages', { credentials: 'include' })
+            if (pagesRes.ok) {
+              const pagesJson = await pagesRes.json()
+              setPages(pagesJson)
+            }
+          } catch (e) {
+            // ignore
+          }
+>>>>>>> 8a4857bbd6805340ad535703c76c6b4690d27f5b
         }
       } catch (e) {
         console.log('Not logged in');
@@ -88,6 +113,7 @@ export default function Home() {
     }
   };
 
+<<<<<<< HEAD
   // Load pages registry
   const loadPages = async () => {
     try {
@@ -103,6 +129,8 @@ export default function Home() {
     }
   };
 
+=======
+>>>>>>> 8a4857bbd6805340ad535703c76c6b4690d27f5b
   // Drag and drop handlers
   const handleDragStart = (e, task) => {
     setDraggedTask(task);
@@ -544,10 +572,14 @@ export default function Home() {
         setPassword('');
         
         // Load projects for all users
+<<<<<<< HEAD
         loadProjects();
         
         // Load pages registry
         loadPages();
+=======
+          loadProjects();
+>>>>>>> 8a4857bbd6805340ad535703c76c6b4690d27f5b
         
         // Load tasks only if user is superadmin
         if (userData.isSuperadmin) {
@@ -1207,12 +1239,17 @@ export default function Home() {
               </div>
 
               {/* Page Access Navigation Buttons */}
+<<<<<<< HEAD
               {user.pageAccess && pages.length > 0 && (
+=======
+              {user.pageAccess && (
+>>>>>>> 8a4857bbd6805340ad535703c76c6b4690d27f5b
                 <div style={{ 
                   display: 'flex', 
                   gap: 8, 
                   width: '100%',
                   maxWidth: 500,
+<<<<<<< HEAD
                   flexWrap: 'wrap',
                   justifyContent: 'center'
                 }}>
@@ -1238,11 +1275,31 @@ export default function Home() {
                         <Link
                           key={page.slug}
                           href={getPagePath(page.slug)}
+=======
+                  flexWrap: 'wrap'
+                }}>
+                  {pages
+                    .filter((p) => user.pageAccess?.[p.slug])
+                    .filter((p) => (p.slug === 'admin' ? user.isSuperadmin : true))
+                    .map((p) => {
+                      const path = (() => {
+                        if (p.slug === 'home') return '/'
+                        if (p.slug === 'bva') return '/bva'
+                        if (p.slug === 'csm') return '/csm-dashboard'
+                        if (p.slug === 'admin') return '/admin'
+                        return `/${p.slug}`
+                      })()
+                      return (
+                        <Link
+                          key={p.slug}
+                          href={path}
+>>>>>>> 8a4857bbd6805340ad535703c76c6b4690d27f5b
                           className="btn btn-sm"
                           style={{
                             flex: 1,
                             textDecoration: 'none',
                             textAlign: 'center',
+<<<<<<< HEAD
                             fontSize: 13,
                             padding: '8px 16px',
                             minHeight: '36px',
@@ -1255,6 +1312,19 @@ export default function Home() {
                           {page.label}
                         </Link>
                       );
+=======
+                            fontSize: 12,
+                            padding: '4px 8px',
+                            minHeight: '28px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                          }}
+                        >
+                          {p.label}
+                        </Link>
+                      )
+>>>>>>> 8a4857bbd6805340ad535703c76c6b4690d27f5b
                     })}
                 </div>
               )}

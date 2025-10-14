@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+"use client";
+>>>>>>> 8a4857bbd6805340ad535703c76c6b4690d27f5b
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
@@ -15,7 +19,11 @@ export default function withPageAccess<T extends {}>(
           const r = await fetch('/api/auth/me', { credentials: 'include' });
           if (!r.ok) {
             // Not logged in → bounce to home
+<<<<<<< HEAD
             router.push('/');
+=======
+            router.replace('/');
+>>>>>>> 8a4857bbd6805340ad535703c76c6b4690d27f5b
             return;
           }
           
@@ -24,6 +32,7 @@ export default function withPageAccess<T extends {}>(
             setOk(true);
           } else {
             // No access → bounce to home
+<<<<<<< HEAD
             router.push('/');
           }
         } catch (error) {
@@ -32,6 +41,16 @@ export default function withPageAccess<T extends {}>(
         }
       })();
     }, [router, slug]);
+=======
+            router.replace('/');
+          }
+        } catch (error) {
+          console.error('Page access check failed:', error);
+          router.replace('/');
+        }
+      })();
+    }, [router]);
+>>>>>>> 8a4857bbd6805340ad535703c76c6b4690d27f5b
     
     // Show loading state while checking access
     if (ok === null) {
