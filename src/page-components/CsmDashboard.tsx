@@ -58,8 +58,8 @@ function CsmDashboardPage() {
         const csvText = await response.text();
         
         // Better CSV parsing function
-        function parseCSVLine(line) {
-          const result = [];
+        function parseCSVLine(line: string): string[] {
+          const result: string[] = [];
           let current = '';
           let inQuotes = false;
           
