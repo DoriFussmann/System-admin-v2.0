@@ -505,9 +505,9 @@ function AdminPage() {
         category,
         source,
         type,
-        individuals: individuals ? individuals.split(',').map(i => i.trim()).filter(i => i) : [],
-        monthlyImpact: monthlyImpact ? parseFloat(monthlyImpact) : 0,
-        hoursPerMonth: hoursPerMonth ? parseFloat(hoursPerMonth) : 0,
+        individuals: individuals ? String(individuals).split(',').map(i => i.trim()).filter(i => i) : [],
+        monthlyImpact: monthlyImpact ? parseFloat(String(monthlyImpact)) : 0,
+        hoursPerMonth: hoursPerMonth ? parseFloat(String(hoursPerMonth)) : 0,
         updates: updates || '',
         logo: logoName,
         logoUrl: logoUrl
