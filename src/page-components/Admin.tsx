@@ -326,6 +326,7 @@ function AdminPage() {
       setProjectFormData({
         name: '',
         status: '',
+        latestStatus: '',
         logo: null,
         category: ''
       })
@@ -1490,7 +1491,7 @@ function AdminPage() {
                     <input
                       type="file"
                       accept="image/*"
-                      onChange={(e) => setProjectFormData(prev => ({ ...prev, logo: e.target.files[0] }))}
+                      onChange={(e) => setProjectFormData(prev => ({ ...prev, logo: e.target.files?.[0] || null }))}
                       style={{ 
                         width: '100%', 
                         padding: 12, 
