@@ -471,6 +471,8 @@ function AdminPage() {
   const handleSaveProject = async (e) => {
     e.preventDefault()
     
+    if (!editingProject) return;
+    
     try {
       const formData = new FormData(e.target)
       const name = formData.get('name')
@@ -484,13 +486,13 @@ function AdminPage() {
       const monthlyImpact = formData.get('monthlyImpact')
       const hoursPerMonth = formData.get('hoursPerMonth')
       const updates = formData.get('updates')
-      let logoUrl = editingProject.logoUrl // Default to existing logo URL
-      let logoName = editingProject.logo // Default to existing logo name
+      let logoUrl = (editingProject as any).logoUrl // Default to existing logo URL
+      let logoName = (editingProject as any).logo // Default to existing logo name
 
       // Process new logo file if uploaded
-      if (editingProject._tempFile) {
+      if ((editingProject as any)._tempFile) {
         // Upload file to server
-        const uploadResult = await uploadFile(editingProject._tempFile);
+        const uploadResult = await uploadFile((editingProject as any)._tempFile);
         logoUrl = uploadResult.url; // This will be something like "/uploads/filename.jpg"
         logoName = uploadResult.originalName;
       }
@@ -512,14 +514,14 @@ function AdminPage() {
       }
 
       // Save to server
-      const savedProject = await apiCall(`/api/projects/${editingProject.id}`, {
+      const savedProject = await apiCall(`/api/projects/${editingProject!.id}`, {
         method: 'PUT',
         body: JSON.stringify(updatedProjectData)
       });
 
       // Update the project in the local state
       setProjects(prev => prev.map(project => 
-        project.id === editingProject.id ? savedProject : project
+        project.id === editingProject!.id ? savedProject : project
       ))
       
       // Close modal and show success message
@@ -1583,35 +1585,35 @@ function AdminPage() {
                         alignItems: 'center',
                         justifyContent: 'center',
                         cursor: 'pointer',
-                        background: editingProject.logoUrl ? 'transparent' : '#f8f9fa',
+                        background: (editingProject as any).logoUrl ? 'transparent' : '#f8f9fa',
                         transition: 'all 0.2s ease'
                       }}
-                      onClick={() => document.getElementById('logo-upload-input').click()}
+                      onClick={() => document.getElementById('logo-upload-input')?.click()}
                       onMouseEnter={(e) => {
-                        if (editingProject.logoUrl) {
-                          e.target.style.opacity = '0.8';
-                          const overlay = e.target.querySelector('.logo-overlay');
-                          if (overlay) overlay.style.opacity = '1';
+                        if ((editingProject as any).logoUrl) {
+                          (e.target as HTMLElement).style.opacity = '0.8';
+                          const overlay = (e.target as HTMLElement).querySelector('.logo-overlay');
+                          if (overlay) (overlay as HTMLElement).style.opacity = '1';
                         } else {
-                          e.target.style.borderColor = '#007bff';
-                          e.target.style.background = '#f0f8ff';
+                          (e.target as HTMLElement).style.borderColor = '#007bff';
+                          (e.target as HTMLElement).style.background = '#f0f8ff';
                         }
                       }}
                       onMouseLeave={(e) => {
-                        if (editingProject.logoUrl) {
-                          e.target.style.opacity = '1';
-                          const overlay = e.target.querySelector('.logo-overlay');
-                          if (overlay) overlay.style.opacity = '0';
+                        if ((editingProject as any).logoUrl) {
+                          (e.target as HTMLElement).style.opacity = '1';
+                          const overlay = (e.target as HTMLElement).querySelector('.logo-overlay');
+                          if (overlay) (overlay as HTMLElement).style.opacity = '0';
                         } else {
-                          e.target.style.borderColor = '#ddd';
-                          e.target.style.background = '#f8f9fa';
+                          (e.target as HTMLElement).style.borderColor = '#ddd';
+                          (e.target as HTMLElement).style.background = '#f8f9fa';
                         }
                       }}
                     >
-                      {editingProject.logoUrl ? (
+                      {(editingProject as any).logoUrl ? (
                         <>
                           <img 
-                            src={editingProject.logoUrl} 
+                            src={(editingProject as any).logoUrl} 
                             alt="Project logo" 
                             style={{ 
                               width: '100%',
