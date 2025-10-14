@@ -67,7 +67,7 @@ function AdminPage() {
   };
 
   // API helper function
-  const apiCall = async (url, options = {}) => {
+  const apiCall = async (url: string, options: RequestInit = {}) => {
     const response = await fetch(url, {
       headers: {
         'Content-Type': 'application/json',

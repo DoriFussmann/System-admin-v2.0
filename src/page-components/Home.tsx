@@ -433,8 +433,8 @@ export default function Home() {
   };
 
   // API helper function
-  const apiCall = async (url, options = {}) => {
-    const defaultOptions = {
+  const apiCall = async (url: string, options: RequestInit = {}) => {
+    const defaultOptions: RequestInit = {
       headers: {
         'Content-Type': 'application/json',
       },
