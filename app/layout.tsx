@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Script from 'next/script';
 import '../styles.css';
+import FloatingChatWidget from '../components/FloatingChatWidget';
 
 export const metadata: Metadata = {
   title: 'The Night Ventures',
@@ -27,6 +28,7 @@ export default function RootLayout({
       </head>
       <body>
         <div id="root">{children}</div>
+        <FloatingChatWidget />
         <Script 
           src="https://cdn.platform.openai.com/deployments/chatkit/chatkit.js" 
           strategy="afterInteractive"

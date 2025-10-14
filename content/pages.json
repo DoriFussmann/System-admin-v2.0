@@ -2,11 +2,6 @@
   { "slug": "home", "label": "Home" },
   { "slug": "bva", "label": "BvA Dashboard" },
   { "slug": "csm", "label": "CSM Dashboard" },
-<<<<<<< HEAD
   { "slug": "chatkit", "label": "AI Assistant" },
   { "slug": "admin", "label": "Admin" }
-=======
-  { "slug": "admin", "label": "Admin" }
-  , { "slug": "agentkit-chat-box", "label": "AgentKit Chat Box" }
->>>>>>> 8a4857bbd6805340ad535703c76c6b4690d27f5b
 ]

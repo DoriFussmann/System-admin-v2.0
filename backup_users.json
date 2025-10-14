@@ -1,74 +1,59 @@
 [
   {
-    "id": "e2ad4d01-028c-43da-889c-4919ba7eab5d",
-    "firstName": "Arden",
-    "lastName": "Veyra",
-    "email": "arden@gmail.com",
-    "password": "$2b$10$OZ0hc98OTtDTU.hvJVnLkeNTqXbSnuwmy3kAK38Rh0qAc/HdxDtdG",
-    "project": "p_kh9pk00e",
-    "projectName": "Snout",
-    "pageAccess": {
-      "home": false,
-      "bva": false,
-      "csm": true,
-      "admin": false
-    },
-    "isSuperadmin": false,
-    "createdAt": "2025-09-17T22:36:29.931Z",
-    "updatedAt": "2025-09-17T22:36:29.931Z"
-  },
-  {
-    "id": "38231ad2-9fbb-4882-b9e6-d643b112f7df",
-    "firstName": "Liora",
-    "lastName": "Caelen",
-    "email": "liora@gmail.com",
-    "password": "$2b$10$SswGTZjVbrt6oBAqSbFSXeVC8xniTgSTi/Ul.bIvQciS.AMsgAFom",
-    "project": "p_kh9pk00e",
-    "projectName": "Snout",
-    "pageAccess": {
-      "home": false,
-      "bva": false,
-      "csm": true,
-      "admin": false
-    },
-    "isSuperadmin": false,
-    "createdAt": "2025-09-17T22:36:52.404Z",
-    "updatedAt": "2025-09-17T22:36:52.404Z"
-  },
-  {
-    "id": "3c795633-9f0d-4c53-b96f-af02984e52d9",
-    "firstName": "Marek",
-    "lastName": "Soltren",
-    "email": "marek@gmail.com",
-    "password": "$2b$10$yMcGNQVF.NKtIcqs9qlUhOWAa.EXN.2H12WRxj5I6kVZvD2eCpTyW",
-    "project": "p_kh9pk00e",
-    "projectName": "Snout",
-    "pageAccess": {
-      "home": false,
-      "bva": false,
-      "csm": true,
-      "admin": false
-    },
-    "isSuperadmin": false,
-    "createdAt": "2025-09-17T22:37:12.781Z",
-    "updatedAt": "2025-09-17T22:37:12.781Z"
-  },
-  {
     "id": "29a6b516-4517-4c87-aad3-1fe946649b78",
     "firstName": "Dori",
     "lastName": "Fussmann",
     "email": "dori@thenightventures.com",
-    "password": "$2b$10$PGnCuKzms/2aqWjgLWeeUuNFeQq9kLxVaQAuJDuhBee8ZSO64MJ5u",
+    "password": "$2b$10$.reKR.cB66N5Apj7edyOnOb3c6OcRj14JcxgZNdP.6pu7vlt05lHC",
     "project": "p_kjdptfhl",
     "projectName": "The Night Ventures",
     "pageAccess": {
-      "home": true,
       "bva": true,
       "csm": true,
-      "admin": true
+      "home": true,
+      "admin": true,
+      "chatkit": true
     },
     "isSuperadmin": true,
     "createdAt": "2025-09-17T23:36:44.309Z",
-    "updatedAt": "2025-09-22T17:50:25.249Z"
+    "updatedAt": "2025-10-14T23:06:54.831Z"
+  },
+  {
+    "id": "cmg71gvqv0001la049g6ia4gm",
+    "firstName": "Dori",
+    "lastName": "Dori",
+    "email": "dori@gmail.com",
+    "password": "$2b$10$mdjDsR7q5TN/Z6PdbJDR4urotK5YbMn5jzHnbk1BRDZx1scVZqvRS",
+    "project": "p_kh9pk00e",
+    "projectName": "Snout",
+    "pageAccess": {
+      "bva": false,
+      "csm": true,
+      "home": false,
+      "admin": false,
+      "chatkit": false
+    },
+    "isSuperadmin": false,
+    "createdAt": "2025-09-30T20:57:37.976Z",
+    "updatedAt": "2025-10-14T23:06:55.032Z"
+  },
+  {
+    "id": "cmgq12i6q0001poj84hjc9nju",
+    "firstName": "Adrian",
+    "lastName": "Leshem",
+    "email": "adrian@nubraces.com",
+    "password": "$2b$10$UUU5f9j/DTYQtsZ7o.h.Z.ZDm.oeOHtQODqin6aG1FoDwpHEGKfqq",
+    "project": "p_0tlglvlq",
+    "projectName": "No Black Swan",
+    "pageAccess": {
+      "bva": false,
+      "csm": false,
+      "home": false,
+      "admin": false,
+      "chatkit": false
+    },
+    "isSuperadmin": false,
+    "createdAt": "2025-10-14T03:54:04.562Z",
+    "updatedAt": "2025-10-14T23:06:55.127Z"
   }
 ]

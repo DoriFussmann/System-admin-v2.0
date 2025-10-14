@@ -16,7 +16,10 @@
     "db:migrate": "prisma migrate dev --name init",
     "db:deploy": "prisma migrate deploy",
     "db:generate": "prisma generate",
-    "db:import": "node scripts/importFromJson.js"
+    "db:import": "node scripts/importFromJson.js",
+    "db:sync-users": "node scripts/syncUsersToJson.js",
+    "db:sync-pages": "node scripts/syncPagesToDb.js",
+    "db:update-page-access": "node scripts/updateAllUserPageAccess.js"
   },
   "keywords": [],
   "author": "",
