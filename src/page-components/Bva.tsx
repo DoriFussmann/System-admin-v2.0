@@ -54,7 +54,7 @@ function BvaPage() {
   const [selectedPeriod, setSelectedPeriod] = useState('')
   const [selectedCompany, setSelectedCompany] = useState('')
 
-  const url = import.meta.env.VITE_SHEET_CSV_URL as string | undefined
+  const url = process.env.NEXT_PUBLIC_SHEET_CSV_URL as string | undefined
 
   const loadUser = async () => {
     try {
