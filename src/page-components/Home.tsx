@@ -13,22 +13,61 @@ interface User {
   projectLogo?: string;
 }
 
+interface Project {
+  id: string;
+  name?: string;
+  title?: string;
+  description?: string;
+  status?: string;
+  notes?: string;
+  latestStatus?: string;
+  category?: string;
+  source?: string;
+  type?: string;
+  individuals?: string[];
+  monthlyImpact?: number;
+  hoursPerMonth?: number;
+  updates?: string;
+  logoUrl?: string;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+interface Task {
+  id: string;
+  title: string;
+  description?: string;
+  status?: string;
+  priority?: string;
+  assignee?: string;
+  project?: string;
+  projectName?: string;
+  dueDate?: string;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+interface Page {
+  slug: string;
+  label: string;
+}
+
 export default function Home() {
   const [showLoginModal, setShowLoginModal] = useState(true)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState<User | null>(null)
-  const [projects, setProjects] = useState([])
-  const [tasks, setTasks] = useState([])
-  const [pages, setPages] = useState([])
+  const [projects, setProjects] = useState<Project[]>([])
+  const [tasks, setTasks] = useState<Task[]>([])
+  const [pages, setPages] = useState<Page[]>([])
   const [isLoading, setIsLoading] = useState(true)
-  const [draggedTask, setDraggedTask] = useState(null)
-  const [dragOverColumn, setDragOverColumn] = useState(null)
+  const [draggedTask, setDraggedTask] = useState<Task | null>(null)
+  const [dragOverColumn, setDragOverColumn] = useState<string | null>(null)
   const [dragOverDelete, setDragOverDelete] = useState(false)
-  const [viewingProject, setViewingProject] = useState(null)
+  const [viewingProject, setViewingProject] = useState<Project | null>(null)
   const [showAddUpdateModal, setShowAddUpdateModal] = useState(false)
   const [showAddTaskModal, setShowAddTaskModal] = useState(false)
-  const [expandedFields, setExpandedFields] = useState({})
+  const [expandedFields, setExpandedFields] = useState<Record<string, boolean>>({})
   const [updateFormData, setUpdateFormData] = useState({
     projectId: '',
     updateText: '',
@@ -44,7 +83,7 @@ export default function Home() {
   const [isGeneratingStatus, setIsGeneratingStatus] = useState(false)
   const [showStatusPreviewModal, setShowStatusPreviewModal] = useState(false)
   const [statusSummary, setStatusSummary] = useState('')
-  const [currentProject, setCurrentProject] = useState(null)
+  const [currentProject, setCurrentProject] = useState<Project | null>(null)
   const [categoryFilter, setCategoryFilter] = useState('')
 
   // Filter projects based on category
