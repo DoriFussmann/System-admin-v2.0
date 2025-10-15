@@ -78,7 +78,8 @@ export default function Home() {
     description: '',
     status: 'Do',
     project: '',
-    dueDate: ''
+    dueDate: '',
+    assignee: ''
   })
   const [isGeneratingStatus, setIsGeneratingStatus] = useState(false)
   const [showStatusPreviewModal, setShowStatusPreviewModal] = useState(false)
@@ -557,7 +558,8 @@ export default function Home() {
         description: '',
         status: 'Do',
         project: '',
-        dueDate: ''
+        dueDate: '',
+        assignee: ''
       })
       setShowAddTaskModal(false)
       
