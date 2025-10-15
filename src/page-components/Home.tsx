@@ -679,8 +679,8 @@ export default function Home() {
                         cursor: 'pointer',
                         transition: 'background-color 0.2s ease'
                       }}
-                      onMouseEnter={(e) => e.target.style.backgroundColor = '#0056b3'}
-                      onMouseLeave={(e) => e.target.style.backgroundColor = '#007bff'}
+                      onMouseEnter={(e) => (e.target as HTMLElement).style.backgroundColor = '#0056b3'}
+                      onMouseLeave={(e) => (e.target as HTMLElement).style.backgroundColor = '#007bff'}
                     >
                       Add Update
                     </button>
@@ -739,8 +739,8 @@ export default function Home() {
                           transition: 'background-color 0.2s ease',
                           whiteSpace: 'nowrap'
                         }}
-                        onMouseEnter={(e) => e.target.style.backgroundColor = '#5a6268'}
-                        onMouseLeave={(e) => e.target.style.backgroundColor = '#6c757d'}
+                        onMouseEnter={(e) => (e.target as HTMLElement).style.backgroundColor = '#5a6268'}
+                        onMouseLeave={(e) => (e.target as HTMLElement).style.backgroundColor = '#6c757d'}
                       >
                         Clear Filter
                       </button>
@@ -938,8 +938,8 @@ export default function Home() {
                           cursor: 'pointer',
                           transition: 'background-color 0.2s ease'
                         }}
-                        onMouseEnter={(e) => e.target.style.backgroundColor = '#0056b3'}
-                        onMouseLeave={(e) => e.target.style.backgroundColor = '#007bff'}
+                        onMouseEnter={(e) => (e.target as HTMLElement).style.backgroundColor = '#0056b3'}
+                        onMouseLeave={(e) => (e.target as HTMLElement).style.backgroundColor = '#007bff'}
                       >
                         Add Task
                       </button>
@@ -1777,12 +1777,12 @@ export default function Home() {
                   }}
                   onMouseEnter={(e) => {
                     if (!isGeneratingStatus) {
-                      e.target.style.backgroundColor = '#218838';
+                      (e.target as HTMLElement).style.backgroundColor = '#218838';
                     }
                   }}
                   onMouseLeave={(e) => {
                     if (!isGeneratingStatus) {
-                      e.target.style.backgroundColor = '#28a745';
+                      (e.target as HTMLElement).style.backgroundColor = '#28a745';
                     }
                   }}
                 >

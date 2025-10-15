@@ -370,8 +370,8 @@ function CsmDashboardPage() {
                       fontSize: 14,
                       transition: 'background-color 0.2s'
                     }}
-                    onMouseEnter={(e) => e.target.style.backgroundColor = '#f8f9fa'}
-                    onMouseLeave={(e) => e.target.style.backgroundColor = 'white'}
+                    onMouseEnter={(e) => (e.target as HTMLElement).style.backgroundColor = '#f8f9fa'}
+                    onMouseLeave={(e) => (e.target as HTMLElement).style.backgroundColor = 'white'}
                   >
                     {clinic.name}
                   </div>
