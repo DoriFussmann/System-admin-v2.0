@@ -903,7 +903,7 @@ export default function Home() {
                               fontWeight: 600,
                               color: '#6c757d'
                             }}>
-                              {project.name.charAt(0).toUpperCase()}
+                              {(project.name?.charAt(0)?.toUpperCase()) || '?'}
                             </div>
                           )}
                         </div>
