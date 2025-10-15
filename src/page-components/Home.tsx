@@ -370,7 +370,7 @@ export default function Home() {
         
         // Update viewing project if it's the same one
         if (viewingProject && viewingProject.id === currentProject.id) {
-          setViewingProject(prev => ({ ...prev, latestStatus: timestampedStatus }));
+          setViewingProject({ ...viewingProject, latestStatus: timestampedStatus });
         }
         
         // Close modal and reset state
