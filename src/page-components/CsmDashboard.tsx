@@ -17,12 +17,12 @@ function CsmDashboardPage() {
   const [user, setUser] = useState<User | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [searchTerm, setSearchTerm] = useState('')
-  const [clinicsData, setClinicsData] = useState([])
-  const [filteredClinics, setFilteredClinics] = useState([])
+  const [clinicsData, setClinicsData] = useState<any[]>([])
+  const [filteredClinics, setFilteredClinics] = useState<any[]>([])
   const [showSuggestions, setShowSuggestions] = useState(false)
-  const [selectedClinic, setSelectedClinic] = useState(null)
+  const [selectedClinic, setSelectedClinic] = useState<any>(null)
   const [selectedMonth, setSelectedMonth] = useState('Sep-25')
-  const [monthOptions, setMonthOptions] = useState([])
+  const [monthOptions, setMonthOptions] = useState<string[]>([])
 
   // Check if user is logged in on component mount
   useEffect(() => {
