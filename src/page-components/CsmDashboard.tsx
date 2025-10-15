@@ -103,12 +103,12 @@ function CsmDashboardPage() {
         setMonthOptions(months);
         
         
-        const clinics = [];
+        const clinics: any[] = [];
         for (let i = 1; i < lines.length; i++) {
           const row = parseCSVLine(lines[i]);
           if (row[clinicNameIndex] && row[csmIndex]) {
             // Create month data object
-            const monthData = {};
+            const monthData: Record<string, number> = {};
             months.forEach((month, index) => {
               const monthColumnIndex = 11 + index; // L=11, M=12, etc.
               const rawValue = row[monthColumnIndex] || '';
