@@ -114,7 +114,7 @@ export default function ChatKitPage() {
       <div style={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column' }}>
         <div style={{ height: '100%', display: 'flex', flexDirection: 'column', maxWidth: 1120, width: '100%', margin: '0 auto', padding: '0 20px' }}>
           <h1 style={{ fontSize: 24, fontWeight: 500, marginTop: 20, marginBottom: 20, color: '#171717' }}>
-            AI Assistant
+            Nübrace Customer Support Agent
           </h1>
           
           {error && (

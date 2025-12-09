@@ -3,7 +3,29 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function POST(request: NextRequest) {
   try {
     const openaiApiKey = process.env.OPENAI_API_KEY;
-    const workflowId = process.env.WORKFLOW_ID;
+    
+    // Get workflow ID from request body or use default
+    let body = {};
+    try {
+      body = await request.json();
+    } catch (e) {
+      // Body might be empty, that's okay
+    }
+    const requestedWorkflowId = body.workflowId;
+    
+    // Determine which workflow ID to use
+    let workflowId: string | undefined;
+    let workflowIdName: string;
+    
+    if (requestedWorkflowId === 'bananhot') {
+      // Use BananHot-specific workflow ID
+      workflowId = process.env.WORKFLOW_ID_BANANHOT;
+      workflowIdName = 'WORKFLOW_ID_BANANHOT';
+    } else {
+      // Use default workflow ID (for NuBrace and others)
+      workflowId = process.env.WORKFLOW_ID;
+      workflowIdName = 'WORKFLOW_ID';
+    }
 
     if (!openaiApiKey) {
       return NextResponse.json(
@@ -14,7 +36,7 @@ export async function POST(request: NextRequest) {
 
     if (!workflowId) {
       return NextResponse.json(
-        { error: 'WORKFLOW_ID not configured' },
+        { error: `${workflowIdName} not configured. Please add it to your .env.local file.` },
         { status: 500 }
       );
     }

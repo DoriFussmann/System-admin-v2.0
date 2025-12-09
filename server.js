@@ -270,6 +270,39 @@ app.get('/api/pages', async (req, res) => {
   }
 });
 
+// Sync pages from JSON to database endpoint
+app.post('/api/pages/sync', async (req, res) => {
+  try {
+    const fs = require('fs');
+    const path = require('path');
+    const pagesPath = path.join(__dirname, 'content/pages.json');
+    const pagesData = fs.readFileSync(pagesPath, 'utf8');
+    const pages = JSON.parse(pagesData);
+    
+    const results = [];
+    for (const page of pages) {
+      const result = await prisma.page.upsert({
+        where: { slug: page.slug },
+        update: { label: page.label },
+        create: {
+          slug: page.slug,
+          label: page.label
+        }
+      });
+      results.push(result);
+    }
+    
+    res.json({ 
+      success: true, 
+      message: `Synced ${results.length} pages`,
+      pages: results 
+    });
+  } catch (e) {
+    console.error('[ERROR] Failed to sync pages:', e);
+    res.status(500).json({ error: e.message });
+  }
+});
+
 
 // Legacy projects endpoint (for backward compatibility)
 app.get('/api/projects', async (req, res) => {

@@ -900,6 +900,106 @@ function AdminPage() {
             </div>
             </details>
           </div>
+
+          {/* Pages Grid - Collapsible */}
+          <div style={{ marginTop: 48 }}>
+            <details className="collapsible" style={{ border: '1px solid #e5e5e5', borderRadius: 8, background: '#ffffff' }}>
+              <summary style={{
+                cursor: 'pointer',
+                listStyle: 'none',
+                padding: '16px 20px',
+                fontSize: 20,
+                lineHeight: '28px',
+                fontWeight: 500,
+                borderBottom: '1px solid #eaeaea',
+                position: 'relative',
+                paddingRight: '40px',
+                color: '#171717'
+              }}>
+                Pages
+              </summary>
+              <div className="collapsible-body" style={{ padding: 20 }}>
+                {pages.length === 0 ? (
+                  <div style={{ 
+                    padding: 32, 
+                    textAlign: 'center', 
+                    color: '#6c757d', 
+                    fontSize: 13 
+                  }}>
+                    No pages found
+                  </div>
+                ) : (
+                  <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(5, 1fr)',
+                    gap: 12,
+                    width: '100%'
+                  }}>
+                    {pages.map(page => {
+                      // Map slug to path
+                      const getPagePath = (slug: string) => {
+                        if (slug === 'home') return '/';
+                        if (slug === 'csm') return '/csm-dashboard';
+                        if (slug === 'chatkit') return '/NuBraceCXAgent';
+                        return `/${slug}`;
+                      };
+
+                      const pagePath = getPagePath(page.slug);
+                      const displayPath = pagePath === '/' ? '/' : pagePath;
+
+                      return (
+                        <Link
+                          key={page.slug}
+                          href={pagePath}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          style={{ 
+                            background: 'white',
+                            border: '1px solid #e5e5e5',
+                            borderRadius: 6,
+                            padding: '12px 14px',
+                            textAlign: 'left',
+                            cursor: 'pointer',
+                            transition: 'all 0.2s ease',
+                            fontSize: 13,
+                            fontWeight: 500,
+                            color: '#171717',
+                            minHeight: '40px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            textDecoration: 'none'
+                          }}
+                          onMouseEnter={(e) => {
+                            (e.target as HTMLElement).style.background = '#f8f9fa';
+                            (e.target as HTMLElement).style.transform = 'translateY(-1px)';
+                            (e.target as HTMLElement).style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.1)';
+                          }}
+                          onMouseLeave={(e) => {
+                            (e.target as HTMLElement).style.background = 'white';
+                            (e.target as HTMLElement).style.transform = 'translateY(0)';
+                            (e.target as HTMLElement).style.boxShadow = 'none';
+                          }}
+                        >
+                          <span>{page.label}</span>
+                          <span style={{
+                            fontSize: 11,
+                            color: '#666',
+                            fontFamily: 'monospace',
+                            background: '#f0f0f0',
+                            padding: '2px 6px',
+                            borderRadius: 4
+                          }}>
+                            {displayPath}
+                          </span>
+                        </Link>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            </details>
+          </div>
         </div>
       </div>
 
