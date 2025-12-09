@@ -48,7 +48,7 @@
     "express-rate-limit": "^8.1.0",
     "jsonwebtoken": "^9.0.2",
     "multer": "^2.0.2",
-    "next": "^15.5.5",
+    "next": "15.5.7",
     "node-fetch": "^2.7.0",
     "openai": "^6.3.0",
     "pg": "^8.16.3",
