@@ -5,7 +5,7 @@ export async function POST(request: NextRequest) {
     const openaiApiKey = process.env.OPENAI_API_KEY;
     
     // Get workflow ID from request body or use default
-    let body = {};
+    let body: { workflowId?: string } = {};
     try {
       body = await request.json();
     } catch (e) {
